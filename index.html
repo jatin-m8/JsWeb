@@ -380,15 +380,22 @@
 
 
 <script>
-  // Button click event se hi HTTP request fire hogi
-  document.getElementById('triggerBtn').addEventListener('click', checkResponse);
+  document.getElementById('triggerBtn').addEventListener('click', function () {
+    sendTrigger();
+    setTimeout(checkResponse, 2000); // 2 second baad response check hoga
+  });
 
-  function checkResponse() {
+  function sendTrigger() {
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      // Ab "action" ka value "success" ya "fail" ke hisaab se bhejo; yahan example ke liye "success" bheja hai.
-      body: JSON.stringify({ action: "success" })
+      body: JSON.stringify({ action: "success" }) // MacroDroid action trigger karega
+    }).catch(error => console.error("Trigger Error:", error));
+  }
+
+  function checkResponse() {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+      method: "GET"
     })
     .then(response => response.json())
     .then(data => {
@@ -424,11 +431,6 @@
       popup.remove();
     }, 3000);
   }
-</script>
-
-
-// ✅ Auto-check every 5 seconds
-setInterval(checkResponse, 5000);
 </script>
 
 
