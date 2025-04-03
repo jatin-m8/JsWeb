@@ -377,6 +377,49 @@
   <center>
     <div class="spcl" style="color: white;text-align:center;font-weight: bold;">Note: You must have to install macro named <a href="https://macrodroidlink.com/macrostore?id=12667" style="color: rgb(0, 221, 255);text-decoration: none;font-weight: bold;display: inline;">"Control Device Remotely (From Website) 15+ Features"</a> in your device to use this Web controller.<br><br>Developed By: <span class="heart">&#10084;</span> From Mr Jatin</div>
   </center>
+
+<script>
+  function checkResponse() {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response.js') // Ya Flask API ka URL
+      .then(response => response.json())
+      .then(data => {
+        if (data.status === "success") {
+          showPopup("Command Success", "green");
+        } else {
+          showPopup("Command Fail", "red");
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        showPopup("Command Fail", "red");
+      });
+  }
+
+  function showPopup(message, color) {
+    let popup = document.createElement("div");
+    popup.innerText = message;
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = color;
+    popup.style.color = "black";
+    popup.style.padding = "15px";
+    popup.style.borderRadius = "10px";
+    popup.style.fontSize = "20px";
+    popup.style.fontWeight = "bold";
+    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove();
+    }, 3000);
+  }
+
+  // Automatically check response every 5 seconds
+  setInterval(checkResponse, 5000);
+</script>
+        
 <script>
         function TDB(button) {
             let dropdown = button.nextElementSibling;
