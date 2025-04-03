@@ -1,11 +1,11 @@
 exports.handler = async function(event, context) {
   try {
-    // ✅ Allow only POST requests
+    // ✅ Only allow POST requests
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 400,
         headers: {
-          "Access-Control-Allow-Origin": "*", // CORS Fix
+          "Access-Control-Allow-Origin": "*", // CORS fix
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ status: "fail", error: "Only POST requests allowed!" })
@@ -15,12 +15,12 @@ exports.handler = async function(event, context) {
     // ✅ Parse Request Body
     const requestData = JSON.parse(event.body || "{}");
 
-    // ✅ Check for action parameter (Custom Logic)
+    // ✅ Custom Action Check
     if (requestData.action === "execute") {
       return {
         statusCode: 200,
         headers: {
-          "Access-Control-Allow-Origin": "*", // CORS Fix
+          "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
         body: JSON.stringify({ status: "success", message: "Command executed!" })
