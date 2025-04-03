@@ -1,7 +1,7 @@
 exports.handler = async function(event, context) {
   try {
     // ✅ Allow only GET requests
-    if (event.httpMethod !== "GET") {
+    if (event.httpMethod !== "POST") {
       return {
         statusCode: 400,
         headers: {
