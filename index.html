@@ -6,7 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
  <title>Macrodroid Integration</title>
   <link rel="stylesheet" href="styles.css">
-  <script src="js/jquery-3.6.3.js"></script>
+  <script src="JS/jquery-3.6.3.js"></script>
 </head>
 <body>
   <h1 class="centerheading">Macrodroid Automation</h1>
@@ -72,7 +72,7 @@
     <span class="title">Speak Something</span><br>
     <label>Input : </label>
     <input type="text" id="tolk"><br>
-    <button id="cmdsend" onclick="senddata('?tolk='+val('tolk')+'&Store=Ftolk')">Test</button>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?tolk='+val('tolk')+'&Store=Ftolk')">Tolk Now</button>
   </div>
 
 <div class="box">
@@ -378,55 +378,60 @@
     <div class="spcl" style="color: white;text-align:center;font-weight: bold;">Note: You must have to install macro named <a href="https://macrodroidlink.com/macrostore?id=12667" style="color: rgb(0, 221, 255);text-decoration: none;font-weight: bold;display: inline;">"Control Device Remotely (From Website) 15+ Features"</a> in your device to use this Web controller.<br><br>Developed By: <span class="heart">&#10084;</span> From Mr Jatin</div>
   </center>
 
+
 <script>
-  
- function checkResponse() {
-  fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ action: "execute" }) // ✅ Ensure action is sent
-  })
-  .then(response => response.json())
-  .then(data => {
-    if (data.status === "success") {
-      showPopup("Command Success", "green");
-    } else {
+  // Button click event se hi HTTP request fire hogi
+  document.getElementById('triggerBtn').addEventListener('click', checkResponse);
+
+  function checkResponse() {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      // Ab "action" ka value "success" ya "fail" ke hisaab se bhejo; yahan example ke liye "success" bheja hai.
+      body: JSON.stringify({ action: "success" })
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        showPopup("Command Success", "green");
+      } else {
+        showPopup("Command Fail", "red");
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
       showPopup("Command Fail", "red");
-    }
-  })
-  .catch(error => {
-    console.error("Error:", error);
-    showPopup("Command Fail", "red");
-  });
-}
+    });
+  }
 
-// ✅ Function to Show Popup
-function showPopup(message, color) {
-  let popup = document.createElement("div");
-  popup.innerText = message;
-  popup.style.position = "fixed";
-  popup.style.top = "50%";
-  popup.style.left = "50%";
-  popup.style.transform = "translate(-50%, -50%)";
-  popup.style.background = color;
-  popup.style.color = "black";
-  popup.style.padding = "15px";
-  popup.style.borderRadius = "10px";
-  popup.style.fontSize = "20px";
-  popup.style.fontWeight = "bold";
-  popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-  document.body.appendChild(popup);
+  function showPopup(message, color) {
+    let popup = document.createElement("div");
+    popup.innerText = message;
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = color;
+    popup.style.color = "black";
+    popup.style.padding = "15px";
+    popup.style.borderRadius = "10px";
+    popup.style.fontSize = "20px";
+    popup.style.fontWeight = "bold";
+    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    document.body.appendChild(popup);
 
-  setTimeout(() => {
-    popup.remove();
-  }, 3000);
-}
+    setTimeout(() => {
+      popup.remove();
+    }, 3000);
+  }
+</script>
+
 
 // ✅ Auto-check every 5 seconds
-setInterval(checkResponse, 5000);   
-  
+setInterval(checkResponse, 5000);
 </script>
-        
+
+
 <script>
         function TDB(button) {
             let dropdown = button.nextElementSibling;
@@ -488,5 +493,5 @@ setInterval(checkResponse, 5000);
     </script>
 
 </body>
-<script src="js/main.js"></script>
+<script src="JS/main.js"></script>
 </html>
