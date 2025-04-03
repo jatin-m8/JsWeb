@@ -379,39 +379,52 @@
   </center>
 
 <script>
-  function checkResponse() {
-    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({ action: "execute" }) // Action parameter send karna zaroori hai
-})
-.then(response => response.json())
-.then(data => console.log(data))
-.catch(error => console.error("Error:", error));
+  
+ function checkResponse() {
+  fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ action: "execute" }) // ✅ Ensure action is sent
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === "success") {
+      showPopup("Command Success", "green");
+    } else {
+      showPopup("Command Fail", "red");
+    }
+  })
+  .catch(error => {
+    console.error("Error:", error);
+    showPopup("Command Fail", "red");
+  });
+}
 
-  function showPopup(message, color) {
-    let popup = document.createElement("div");
-    popup.innerText = message;
-    popup.style.position = "fixed";
-    popup.style.top = "50%";
-    popup.style.left = "50%";
-    popup.style.transform = "translate(-50%, -50%)";
-    popup.style.background = color;
-    popup.style.color = "black";
-    popup.style.padding = "15px";
-    popup.style.borderRadius = "10px";
-    popup.style.fontSize = "20px";
-    popup.style.fontWeight = "bold";
-    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-    document.body.appendChild(popup);
+// ✅ Function to Show Popup
+function showPopup(message, color) {
+  let popup = document.createElement("div");
+  popup.innerText = message;
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.background = color;
+  popup.style.color = "black";
+  popup.style.padding = "15px";
+  popup.style.borderRadius = "10px";
+  popup.style.fontSize = "20px";
+  popup.style.fontWeight = "bold";
+  popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+  document.body.appendChild(popup);
 
-    setTimeout(() => {
-      popup.remove();
-    }, 3000);
-  }
+  setTimeout(() => {
+    popup.remove();
+  }, 3000);
+}
 
-  // Automatically check response every 5 seconds
-  setInterval(checkResponse, 5000);
+// ✅ Auto-check every 5 seconds
+setInterval(checkResponse, 5000);   
+  
 </script>
         
 <script>
