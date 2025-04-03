@@ -1,6 +1,6 @@
 exports.handler = async function(event, context) {
   try {
-    // ✅ Only allow POST requests
+    // Only allow POST requests
     if (event.httpMethod !== "POST") {
       return {
         statusCode: 400,
@@ -12,27 +12,28 @@ exports.handler = async function(event, context) {
       };
     }
 
-    // ✅ Parse Request Body
+    // Parse Request Body
     const requestData = JSON.parse(event.body || "{}");
 
-    // ✅ Custom Action Check
-    if (requestData.action === "execute") {
+    // Ab "action" ka value "success" bheja gaya to command successful
+    if (requestData.action === "success") {
       return {
         statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: "success", message: "Command executed!" })
+        body: JSON.stringify({ status: "success", message: "Command Success" })
       };
     } else {
+      // Agar "action" me kuch aur value hai to command fail maan lo
       return {
         statusCode: 400,
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: "fail", error: "Invalid action parameter!" })
+        body: JSON.stringify({ status: "fail", error: "Command Failed" })
       };
     }
 
