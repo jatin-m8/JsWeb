@@ -380,20 +380,14 @@
 
 <script>
   function checkResponse() {
-    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response') // Ya Flask API ka URL
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success") {
-          showPopup("Command Success", "green");
-        } else {
-          showPopup("Command Fail", "red");
-        }
-      })
-      .catch(error => {
-        console.error("Error:", error);
-        showPopup("Command Fail", "red");
-      });
-  }
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ action: "execute" }) // Action parameter send karna zaroori hai
+})
+.then(response => response.json())
+.then(data => console.log(data))
+.catch(error => console.error("Error:", error));
 
   function showPopup(message, color) {
     let popup = document.createElement("div");
