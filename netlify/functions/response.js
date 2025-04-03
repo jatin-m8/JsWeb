@@ -1,41 +1,45 @@
+let latestStatus = "fail"; // Default "fail" rakho
+
 exports.handler = async function(event, context) {
   try {
-    // Only allow POST requests
-    if (event.httpMethod !== "POST") {
-      return {
-        statusCode: 400,
-        headers: {
-          "Access-Control-Allow-Origin": "*", // CORS fix
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ status: "fail", error: "Only POST requests allowed!" })
-      };
-    }
+    if (event.httpMethod === "POST") {
+      const requestData = JSON.parse(event.body || "{}");
 
-    // Parse Request Body
-    const requestData = JSON.parse(event.body || "{}");
+      if (requestData.action === "success") {
+        latestStatus = "success"; // Agar MacroDroid success bhej raha hai to status update karo
+      } else {
+        latestStatus = "fail"; // Agar MacroDroid fail bhej raha hai to update karo
+      }
 
-    // Ab "action" ka value "success" bheja gaya to command successful
-    if (requestData.action === "success") {
       return {
         statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: "success", message: "Command Success" })
+        body: JSON.stringify({ status: latestStatus })
       };
-    } else {
-      // Agar "action" me kuch aur value hai to command fail maan lo
+    }
+
+    if (event.httpMethod === "GET") {
       return {
-        statusCode: 400,
+        statusCode: 200,
         headers: {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: "fail", error: "Command Failed" })
+        body: JSON.stringify({ status: latestStatus })
       };
     }
+
+    return {
+      statusCode: 400,
+      headers: {
+        "Access-Control-Allow-Origin": "*",
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ status: "fail", error: "Invalid request" })
+    };
 
   } catch (error) {
     return {
