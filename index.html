@@ -380,7 +380,7 @@
 
 <script>
   function checkResponse() {
-    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response.js') // Ya Flask API ka URL
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response') // Ya Flask API ka URL
       .then(response => response.json())
       .then(data => {
         if (data.status === "success") {
