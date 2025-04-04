@@ -1,59 +1,49 @@
-let latestStatus = "fail"; // Default status
+<script>
+  let lastStatus = "fail"; // Initial default status
 
-// Status ko har 3 second me reset karne ke liye interval set karte hain
-setInterval(() => {
-  latestStatus = "fail"; // Har 3 second baad reset ho jayega
-}, 3000);
-
-exports.handler = async function(event, context) {
-  try {
-    if (event.httpMethod === "POST") {
-      const requestData = JSON.parse(event.body || "{}");
-
-      if (requestData.action === "success") {
-        latestStatus = "success"; // Agar MacroDroid success bhej raha hai to update karo
-      } else {
-        latestStatus = "fail"; // Agar MacroDroid fail bhej raha hai to update karo
-      }
-
-      return {
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ status: latestStatus })
-      };
-    }
-
-    if (event.httpMethod === "GET") {
-      return {
-        statusCode: 200,
-        headers: {
-          "Access-Control-Allow-Origin": "*",
-          "Content-Type": "application/json"
-        },
-        body: JSON.stringify({ status: latestStatus })
-      };
-    }
-
-    return {
-      statusCode: 400,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ status: "fail", error: "Invalid request" })
-    };
-
-  } catch (error) {
-    return {
-      statusCode: 500,
-      headers: {
-        "Access-Control-Allow-Origin": "*",
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ status: "fail", error: "Internal Server Error", details: error.message })
-    };
+  function checkResponse() {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
+      .then(response => response.json())
+      .then(data => {
+        if (data.status !== lastStatus) {
+          lastStatus = data.status;
+          if (lastStatus === "success") {
+            showPopup("Command Success", "green");
+          } else {
+            showPopup("Command Fail", "red");
+          }
+        }
+      })
+      .catch(error => {
+        console.error("Error:", error);
+        if (lastStatus !== "fail") {
+          lastStatus = "fail";
+          showPopup("Command Fail", "red");
+        }
+      });
   }
-};
+
+  function showPopup(message, color) {
+    let popup = document.createElement("div");
+    popup.innerText = message;
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = color;
+    popup.style.color = "white";
+    popup.style.padding = "15px";
+    popup.style.borderRadius = "10px";
+    popup.style.fontSize = "20px";
+    popup.style.fontWeight = "bold";
+    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    popup.style.zIndex = 9999;
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove();
+    }, 3000);
+  }
+
+  setInterval(checkResponse, 1000); // Every 1 second
+</script>
