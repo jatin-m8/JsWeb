@@ -1,4 +1,9 @@
-let latestStatus = "fail"; // Default "fail" rakho
+let latestStatus = "fail"; // Default status
+
+// Status ko har 3 second me reset karne ke liye interval set karte hain
+setInterval(() => {
+  latestStatus = "fail"; // Har 3 second baad reset ho jayega
+}, 3000);
 
 exports.handler = async function(event, context) {
   try {
@@ -6,7 +11,7 @@ exports.handler = async function(event, context) {
       const requestData = JSON.parse(event.body || "{}");
 
       if (requestData.action === "success") {
-        latestStatus = "success"; // Agar MacroDroid success bhej raha hai to status update karo
+        latestStatus = "success"; // Agar MacroDroid success bhej raha hai to update karo
       } else {
         latestStatus = "fail"; // Agar MacroDroid fail bhej raha hai to update karo
       }
