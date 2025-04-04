@@ -378,37 +378,25 @@
     <div class="spcl" style="color: white;text-align:center;font-weight: bold;">Note: You must have to install macro named <a href="https://macrodroidlink.com/macrostore?id=12667" style="color: rgb(0, 221, 255);text-decoration: none;font-weight: bold;display: inline;">"Control Device Remotely (From Website) 15+ Features"</a> in your device to use this Web controller.<br><br>Developed By: <span class="heart">&#10084;</span> From Mr Jatin</div>
   </center>
 
-
 <script>
-  document.getElementById('triggerBtn').addEventListener('click', function () {
-    sendTrigger();
-    setTimeout(checkResponse, 2000); // 2 second baad response check hoga
-  });
-
-  function sendTrigger() {
-    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ action: "success" }) // MacroDroid action trigger karega
-    }).catch(error => console.error("Trigger Error:", error));
-  }
-
   function checkResponse() {
-    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-      method: "GET"
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success") {
-        showPopup("Command Success", "green");
-      } else {
+    showLoader(true); // Loader dikhaye
+    
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
+      .then(response => response.json())
+      .then(data => {
+        showLoader(false); // Loader hatao
+
+        if (data.status === "success") {
+          showPopup("Command Success", "green");
+        } else {
+          showPopup("Command Fail", "red");
+        }
+      })
+      .catch(error => {
+        showLoader(false); // Loader hatao
         showPopup("Command Fail", "red");
-      }
-    })
-    .catch(error => {
-      console.error("Error:", error);
-      showPopup("Command Fail", "red");
-    });
+      });
   }
 
   function showPopup(message, color) {
@@ -419,18 +407,56 @@
     popup.style.left = "50%";
     popup.style.transform = "translate(-50%, -50%)";
     popup.style.background = color;
-    popup.style.color = "black";
-    popup.style.padding = "15px";
+    popup.style.color = "white";
+    popup.style.padding = "15px 25px";
     popup.style.borderRadius = "10px";
-    popup.style.fontSize = "20px";
+    popup.style.fontSize = "18px";
     popup.style.fontWeight = "bold";
-    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    popup.style.boxShadow = "0 0 15px rgba(0,0,0,0.4)";
+    popup.style.zIndex = 9999;
     document.body.appendChild(popup);
 
     setTimeout(() => {
       popup.remove();
     }, 3000);
   }
+
+  // Loader animation
+  function showLoader(show) {
+    let loader = document.getElementById("loading-indicator");
+
+    if (!loader) {
+      loader = document.createElement("div");
+      loader.id = "loading-indicator";
+      loader.style.position = "fixed";
+      loader.style.top = "0";
+      loader.style.left = "0";
+      loader.style.width = "100vw";
+      loader.style.height = "100vh";
+      loader.style.display = "flex";
+      loader.style.alignItems = "center";
+      loader.style.justifyContent = "center";
+      loader.style.background = "rgba(255, 255, 255, 0.7)";
+      loader.style.zIndex = 9998;
+
+      loader.innerHTML = `
+        <div style="border: 6px solid #f3f3f3; border-top: 6px solid #3498db; border-radius: 50%; width: 50px; height: 50px; animation: spin 1s linear infinite;"></div>
+        <style>
+          @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+          }
+        </style>
+      `;
+
+      document.body.appendChild(loader);
+    }
+
+    loader.style.display = show ? "flex" : "none";
+  }
+
+  // Call every 5 seconds
+  setInterval(checkResponse, 5000);
 </script>
 
 
