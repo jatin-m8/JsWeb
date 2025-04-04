@@ -72,7 +72,7 @@
     <span class="title">Speak Something</span><br>
     <label>Input : </label>
     <input type="text" id="tolk"><br>
-    <button class="cmdsend" id="triggerBtn" onclick="senddata('?tolk='+val('tolk')+'&Store=Ftolk')">Tolk Now</button>
+    <button class="cmdsend" id="triggerBtn" onclick="checkResponse();senddata('?tolk='+val('tolk')+'&Store=Ftolk')">Tolk Now</button>
   </div>
 
 <div class="box">
@@ -101,7 +101,7 @@
     <span class="title">Floating Text</span><br>
     <label>Text : </label>
     <input type="text" id="ftxt"><br>
-    <button id="cmdsend" onclick="senddata('?ftext='+val('ftxt')+'&Store=floaton')">Test</button>
+    <button id="cmdsend" onclick="checkResponse();senddata('?ftext='+val('ftxt')+'&Store=floaton')">Test</button>
     <button id="cmdsend" style="margin: 5px;display: inline;" onclick="senddata('?Store=floatoff')">Disable Floating Text</button>  
   </div>
   <div class="box">
@@ -378,10 +378,13 @@
     <div class="spcl" style="color: white;text-align:center;font-weight: bold;">Note: You must have to install macro named <a href="https://macrodroidlink.com/macrostore?id=12667" style="color: rgb(0, 221, 255);text-decoration: none;font-weight: bold;display: inline;">"Control Device Remotely (From Website) 15+ Features"</a> in your device to use this Web controller.<br><br>Developed By: <span class="heart">&#10084;</span> From Mr Jatin</div>
   </center>
 
+
+
+<!-- SCRIPT -->
 <script>
   function checkResponse() {
-    showLoader(true); // Loader dikhaye
-    
+    showLoader(true); // Loader start karo
+
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
@@ -394,7 +397,7 @@
         }
       })
       .catch(error => {
-        showLoader(false); // Loader hatao
+        showLoader(false);
         showPopup("Command Fail", "red");
       });
   }
@@ -421,7 +424,6 @@
     }, 3000);
   }
 
-  // Loader animation
   function showLoader(show) {
     let loader = document.getElementById("loading-indicator");
 
@@ -454,10 +456,10 @@
 
     loader.style.display = show ? "flex" : "none";
   }
-
-  // Call every 5 seconds
-  setInterval(checkResponse, 5000);
 </script>
+
+
+
 
 
 <script>
