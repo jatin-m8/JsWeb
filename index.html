@@ -101,7 +101,7 @@
     <span class="title">Floating Text</span><br>
     <label>Text : </label>
     <input type="text" id="ftxt"><br>
-    <button id="cmdsend" onclick="checkResponse();senddata('?ftext='+val('ftxt')+'&Store=floaton')">Test</button>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?ftext='+val('ftxt')+'&Store=floaton')">Test</button>
     <button id="cmdsend" style="margin: 5px;display: inline;" onclick="senddata('?Store=floatoff')">Disable Floating Text</button>  
   </div>
   <div class="box">
@@ -109,20 +109,20 @@
     <label>Text: </label>
     <input type="text" id="paste"><br>
     <button id="cmdsend" onclick="senddata('?paste='+val('paste'))">Test</button>
-    <button id="cmdsend" style="margin: 5px;display: inline;" onclick="senddata('?paste=clrscr')">Clear Input Field</button>
+    <button class="cmdsend" id="triggerBtn" style="margin: 5px;display: inline;" onclick="senddata('?paste=clrscr')">Clear Input Field</button>
   </div>
   <div class="box">
     <span class="title">DIM Screen</span><br>
     <label>Input (0-100) : </label>
     <input type="text" id="dim"><br>
     <button id="cmdsend" onclick="senddata('?DIM='+val('dim'))">Test</button>
-    <button id="cmdsend" style="margin: 5px;display: inline;" onclick="senddata('?Store=dimoff')">Dim Screen Off</button>
+    <button class="cmdsend" id="triggerBtn" style="margin: 5px;display: inline;" onclick="senddata('?Store=dimoff')">Dim Screen Off</button>
   </div>
   <div class="box">
     <span class="title">Control Brightness</span><br>
     <label>Input (0-100) : </label>
     <input type="text" id="brts"><br>
-    <button id="cmdsend" onclick="senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
   </div>
   <div class="box">
     <span class="title">Telegram Bot Connection</span><br>
