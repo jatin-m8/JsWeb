@@ -382,15 +382,16 @@
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 <script>
-  let lastStatus = "fail"; // Initial default status
+  let lastShownTime = 0;
 
   function checkResponse() {
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
-        if (data.status !== lastStatus) {
-          lastStatus = data.status;
-          if (lastStatus === "success") {
+        if (data.updatedAt !== lastShownTime) {
+          lastShownTime = data.updatedAt;
+
+          if (data.status === "success") {
             showPopup("Command Success", "green");
           } else {
             showPopup("Command Fail", "red");
@@ -399,15 +400,12 @@
       })
       .catch(error => {
         console.error("Error:", error);
-        if (lastStatus !== "fail") {
-          lastStatus = "fail";
-          showPopup("Command Fail", "red");
-        }
+        showPopup("Command Fail", "red");
       });
   }
 
   function showPopup(message, color) {
-    let popup = document.createElement("div");
+    const popup = document.createElement("div");
     popup.innerText = message;
     popup.style.position = "fixed";
     popup.style.top = "50%";
@@ -428,7 +426,8 @@
     }, 3000);
   }
 
-  setInterval(checkResponse, 1000); // Every 1 second
+  // Run every second
+  setInterval(checkResponse, 1000);
 </script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
