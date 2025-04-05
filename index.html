@@ -382,82 +382,96 @@
   <script>
     document.getElementById('triggerBtn').addEventListener('click', checkResponse);
 
-    function createPopup(content, bgColor, showClose = false, autoClose = false) {
-      const existing = document.getElementById("statusPopup");
-      if (existing) existing.remove();
+function createPopup(content, bgColor, showClose = false, autoClose = false) {
+  const existing = document.getElementById("statusPopup");
+  if (existing) existing.remove();
 
-      const popup = document.createElement("div");
-      popup.className = "popup";
-      popup.id = "statusPopup";
-      popup.style.background = bgColor;
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  popup.id = "statusPopup";
+  popup.style.background = bgColor;
 
-      if (showClose) {
-        const closeBtn = document.createElement("button");
-        closeBtn.className = "close-btn";
-        closeBtn.innerHTML = "&times;";
-        closeBtn.onclick = () => {
-          popup.style.animation = "popupOut 0.4s forwards ease-in";
-          setTimeout(() => popup.remove(), 400);
-        };
-        popup.appendChild(closeBtn);
-      }
+  // Center popup content
+  popup.style.display = "flex";
+  popup.style.flexDirection = "row";
+  popup.style.alignItems = "center";
+  popup.style.justifyContent = "center";
+  popup.style.gap = "12px";
+  popup.style.textAlign = "center";
 
-      if (typeof content === "string") {
-        const msg = document.createElement("span");
-        msg.innerText = content;
-        popup.appendChild(msg);
-      } else {
-        popup.appendChild(content);
-      }
+  if (showClose) {
+    const closeBtn = document.createElement("button");
+    closeBtn.innerHTML = "&times;";
+    closeBtn.style.position = "absolute";
+    closeBtn.style.top = "6px";
+    closeBtn.style.right = "10px";
+    closeBtn.style.background = "transparent";
+    closeBtn.style.border = "none";
+    closeBtn.style.color = "#0f172a";
+    closeBtn.style.fontSize = "24px";
+    closeBtn.style.cursor = "pointer";
+    closeBtn.onclick = () => {
+      popup.style.animation = "popupOut 0.4s forwards ease-in";
+      setTimeout(() => popup.remove(), 400);
+    };
+    popup.appendChild(closeBtn);
+  }
 
-      document.body.appendChild(popup);
+  if (typeof content === "string") {
+    const msg = document.createElement("span");
+    msg.innerText = content;
+    popup.appendChild(msg);
+  } else {
+    popup.appendChild(content);
+  }
 
-      if (autoClose) {
-        setTimeout(() => {
-          popup.style.animation = "popupOut 0.4s forwards ease-in";
-          setTimeout(() => popup.remove(), 400);
-        }, 2000);
-      }
+  document.body.appendChild(popup);
+
+  if (autoClose) {
+    setTimeout(() => {
+      popup.style.animation = "popupOut 0.4s forwards ease-in";
+      setTimeout(() => popup.remove(), 400);
+    }, 2000);
+  }
+}
+
+function checkResponse() {
+  // Show loading popup
+  const container = document.createElement("div");
+  container.style.display = "flex";
+  container.style.alignItems = "center";
+  container.style.justifyContent = "center";
+  container.style.gap = "12px";
+
+  const img = document.createElement("img");
+  img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png"; // Apna logo ya spinner image
+  img.alt = "Loading...";
+  img.className = "img-spinner";
+
+  const message = document.createElement("span");
+  message.innerText = "Checking status...";
+  container.appendChild(img);
+  container.appendChild(message);
+
+  createPopup(container, "#facc15", true); // Loading with close button
+
+  fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+    method: "GET",
+    cache: "no-store"
+  })
+  .then(response => response.json())
+  .then(data => {
+    if (data.status === "success") {
+      createPopup("Command Success", "#4ade80", false, true);
+    } else {
+      createPopup("Command Fail", "#f87171", false, true);
     }
-
-    function checkResponse() {
-      // Show loading popup
-      const container = document.createElement("div");
-      container.style.display = "flex";
-      container.style.alignItems = "center";
-      container.style.justifyContent = "center";
-      container.style.gap = "12px";
-
-      const img = document.createElement("img");
-      img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
-      img.alt = "Loading...";
-      img.className = "img-spinner";
-
-      const message = document.createElement("span");
-      message.innerText = "Checking status...";
-      container.appendChild(img);
-      container.appendChild(message);
-
-      createPopup(container, "#facc15", true); // Only loading has close button
-
-      // Fetch status
-      fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-        method: "GET",
-        cache: "no-store"
-      })
-      .then(response => response.json())
-      .then(data => {
-        if (data.status === "success") {
-          createPopup("Command Success", "#4ade80", false, true);
-        } else {
-          createPopup("Command Fail", "#f87171", false, true);
-        }
-      })
-      .catch(err => {
-        console.error(err);
-        createPopup("Command Fail", "#f87171", false, true);
-      });
-    }
+  })
+  .catch(err => {
+    console.error(err);
+    createPopup("Command Fail", "#f87171", false, true);
+  });
+}
   </script>
 
 
