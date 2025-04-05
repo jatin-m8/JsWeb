@@ -382,16 +382,52 @@
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 <script>
-  let lastShownTime = 0;
+  let lastStatus = "fail"; // Initial default status
+  let isLoading = false; // Track if loading is active
+
+  function showLoader() {
+    if (!document.getElementById("loading-animation")) {
+      let loader = document.createElement("div");
+      loader.id = "loading-animation";
+      loader.innerText = "Loading...";
+      loader.style.position = "fixed";
+      loader.style.top = "50%";
+      loader.style.left = "50%";
+      loader.style.transform = "translate(-50%, -50%)";
+      loader.style.background = "#000";
+      loader.style.color = "#fff";
+      loader.style.padding = "15px 25px";
+      loader.style.borderRadius = "10px";
+      loader.style.fontSize = "18px";
+      loader.style.fontWeight = "bold";
+      loader.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
+      loader.style.zIndex = 9999;
+      document.body.appendChild(loader);
+    }
+  }
+
+  function hideLoader() {
+    const loader = document.getElementById("loading-animation");
+    if (loader) {
+      loader.remove();
+    }
+  }
 
   function checkResponse() {
+    if (!isLoading) {
+      isLoading = true;
+      showLoader(); // Start loading when check starts
+    }
+
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
-        if (data.updatedAt !== lastShownTime) {
-          lastShownTime = data.updatedAt;
+        hideLoader(); // Stop loading once we get response
+        isLoading = false;
 
-          if (data.status === "success") {
+        if (data.status !== lastStatus) {
+          lastStatus = data.status;
+          if (lastStatus === "success") {
             showPopup("Command Success", "green");
           } else {
             showPopup("Command Fail", "red");
@@ -400,12 +436,18 @@
       })
       .catch(error => {
         console.error("Error:", error);
-        showPopup("Command Fail", "red");
+        hideLoader();
+        isLoading = false;
+
+        if (lastStatus !== "fail") {
+          lastStatus = "fail";
+          showPopup("Command Fail", "red");
+        }
       });
   }
 
   function showPopup(message, color) {
-    const popup = document.createElement("div");
+    let popup = document.createElement("div");
     popup.innerText = message;
     popup.style.position = "fixed";
     popup.style.top = "50%";
@@ -426,8 +468,7 @@
     }, 3000);
   }
 
-  // Run every second
-  setInterval(checkResponse, 1000);
+  setInterval(checkResponse, 1000); // Run every 1 second
 </script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
