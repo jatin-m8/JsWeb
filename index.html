@@ -455,27 +455,32 @@ function checkResponse() {
   // Step 1: Show loading popup
   createPopup("Checking status...", "#facc15", { loading: true, showClose: true });
 
-  // Step 2: Wait for latest response and then show result
+  // Step 2: Fetch the latest status
   fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
     method: "GET",
     cache: "no-store"
   })
   .then(response => response.json())
   .then(data => {
-    const loading = document.getElementById("statusPopup");
-    if (loading) loading.remove();
+    // Step 3: After response received, wait extra 2.5s before showing status
+    setTimeout(() => {
+      const loading = document.getElementById("statusPopup");
+      if (loading) loading.remove();
 
-    if (data.status === "success") {
-      createPopup("Command Success", "#4ade80");
-    } else {
-      createPopup("Command Fail", "#f87171");
-    }
+      if (data.status === "success") {
+        createPopup("Command Success", "#4ade80");
+      } else {
+        createPopup("Command Fail", "#f87171");
+      }
+    }, 2500); // wait 2.5s AFTER response
   })
   .catch(err => {
     console.error(err);
-    const loading = document.getElementById("statusPopup");
-    if (loading) loading.remove();
-    createPopup("Command Fail", "#f87171");
+    setTimeout(() => {
+      const loading = document.getElementById("statusPopup");
+      if (loading) loading.remove();
+      createPopup("Command Fail", "#f87171");
+    }, 2500);
   });
 }
 </script>
