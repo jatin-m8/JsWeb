@@ -384,86 +384,85 @@
 <script>
   let lastShownTime = 0;
 
-  function checkResponse() {
-    showLoading(); // "Verifying" dikhaye
+  document.getElementById('triggerBtn').addEventListener('click', checkResponse);
 
+  function createPopup(content, bgColor, showClose = false, autoClose = false) {
+    const existing = document.getElementById("statusPopup");
+    if (existing) existing.remove();
+
+    const popup = document.createElement("div");
+    popup.className = "popup";
+    popup.id = "statusPopup";
+    popup.style.background = bgColor;
+
+    if (showClose) {
+      const closeBtn = document.createElement("button");
+      closeBtn.className = "close-btn";
+      closeBtn.innerHTML = "&times;";
+      closeBtn.onclick = () => {
+        popup.style.animation = "popupOut 0.4s forwards ease-in";
+        setTimeout(() => popup.remove(), 400);
+      };
+      popup.appendChild(closeBtn);
+    }
+
+    if (typeof content === "string") {
+      const msg = document.createElement("span");
+      msg.innerText = content;
+      popup.appendChild(msg);
+    } else {
+      popup.appendChild(content);
+    }
+
+    document.body.appendChild(popup);
+
+    if (autoClose) {
+      setTimeout(() => {
+        popup.style.animation = "popupOut 0.4s forwards ease-in";
+        setTimeout(() => popup.remove(), 400);
+      }, 2000);
+    }
+  }
+
+  function checkResponse() {
+    // Loading animation popup
+    const container = document.createElement("div");
+    container.style.display = "flex";
+    container.style.alignItems = "center";
+    container.style.justifyContent = "center";
+    container.style.gap = "12px";
+
+    const img = document.createElement("img");
+    img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
+    img.alt = "Loading...";
+    img.className = "img-spinner";
+
+    const message = document.createElement("span");
+    message.innerText = "Verifying";
+    container.appendChild(img);
+    container.appendChild(message);
+
+    createPopup(container, "#facc15");
+
+    // Call backend
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
-        removePopup(); // Verifying popup hata do
-
         if (data.updatedAt !== lastShownTime) {
           lastShownTime = data.updatedAt;
 
           if (data.status === "success") {
-            showPopup("Command Success", "green");
+            createPopup("Command Success", "#4ade80", false, true);
           } else {
-            showPopup("Command Fail", "red");
+            createPopup("Command Fail", "#f87171", false, true);
           }
         }
       })
       .catch(error => {
-        removePopup();
         console.error("Error:", error);
-        showPopup("Command Fail", "red");
+        createPopup("Command Fail", "#f87171", false, true);
       });
   }
-
-  function showPopup(message, color) {
-    removePopup();
-
-    const popup = document.createElement("div");
-    popup.innerText = message;
-    popup.style.position = "fixed";
-    popup.style.top = "50%";
-    popup.style.left = "50%";
-    popup.style.transform = "translate(-50%, -50%)";
-    popup.style.background = color;
-    popup.style.color = "white";
-    popup.style.padding = "15px";
-    popup.style.borderRadius = "10px";
-    popup.style.fontSize = "20px";
-    popup.style.fontWeight = "bold";
-    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-    popup.style.zIndex = 9999;
-    popup.id = "statusPopup";
-    document.body.appendChild(popup);
-
-    setTimeout(() => {
-      popup.remove();
-    }, 3000);
-  }
-
-  function showLoading() {
-    removePopup();
-
-    const loadingPopup = document.createElement("div");
-    loadingPopup.innerHTML = `<img src="loading-icon-url.png" width="30" style="vertical-align: middle; margin-right: 10px;">Verifying`;
-    loadingPopup.style.position = "fixed";
-    loadingPopup.style.top = "50%";
-    loadingPopup.style.left = "50%";
-    loadingPopup.style.transform = "translate(-50%, -50%)";
-    loadingPopup.style.background = "yellow";
-    loadingPopup.style.color = "black";
-    loadingPopup.style.padding = "15px";
-    loadingPopup.style.borderRadius = "10px";
-    loadingPopup.style.fontSize = "20px";
-    loadingPopup.style.fontWeight = "bold";
-    loadingPopup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
-    loadingPopup.style.zIndex = 9999;
-    loadingPopup.id = "statusPopup";
-    document.body.appendChild(loadingPopup);
-  }
-
-  function removePopup() {
-    const existingPopup = document.getElementById("statusPopup");
-    if (existingPopup) {
-      existingPopup.remove();
-    }
-  }
-
-  // Button pe click karne par function chalega
-  document.getElementById("triggerBtn").addEventListener("click", checkResponse);
 </script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
