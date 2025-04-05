@@ -462,7 +462,7 @@ function checkResponse() {
   })
   .then(response => response.json())
   .then(data => {
-    // Step 3: After response received, wait extra 2.5s before showing status
+    // Step 3: Wait extra 2.5 seconds before showing status
     setTimeout(() => {
       const loading = document.getElementById("statusPopup");
       if (loading) loading.remove();
@@ -472,7 +472,7 @@ function checkResponse() {
       } else {
         createPopup("Command Fail", "#f87171");
       }
-    }, 2500); // wait 2.5s AFTER response
+    }, 2500); // 2.5 seconds extra delay
   })
   .catch(err => {
     console.error(err);
