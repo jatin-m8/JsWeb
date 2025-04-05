@@ -280,7 +280,7 @@ display: flex;
 
 
 
-.popup {
+/* .popup {
       position: fixed;
       top: 50%;
       left: 50%;
@@ -355,4 +355,39 @@ display: flex;
         font-size: 16px;
         padding: 10px 20px;
       }
-    }
+    }   */
+
+
+.popup {
+  animation: popupIn 0.4s forwards ease-out;
+  border-radius: 12px;
+  padding: 16px 24px;
+  font-size: 18px;
+  font-weight: bold;
+  box-shadow: 0 0 20px rgba(0,0,0,0.3);
+  z-index: 9999;
+}
+
+.img-spinner {
+  width: 28px;
+  height: 28px;
+  animation: rotate 1s linear infinite;
+}
+
+@keyframes rotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes popupOut {
+  0% {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-50%, -60%) scale(0.8);
+  }
+}
+
+
