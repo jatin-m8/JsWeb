@@ -385,12 +385,12 @@
   let lastShownTime = 0;
 
   function checkResponse() {
-    showLoading(); // Show loading animation before fetching response
+    showLoading(); // "Verifying" dikhaye
 
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
-        removePopup(); // Remove loading animation
+        removePopup(); // Verifying popup hata do
 
         if (data.updatedAt !== lastShownTime) {
           lastShownTime = data.updatedAt;
@@ -410,7 +410,7 @@
   }
 
   function showPopup(message, color) {
-    removePopup(); // Ensure previous popup is removed
+    removePopup();
 
     const popup = document.createElement("div");
     popup.innerText = message;
@@ -435,10 +435,10 @@
   }
 
   function showLoading() {
-    removePopup(); // Clear any existing popup
+    removePopup();
 
     const loadingPopup = document.createElement("div");
-    loadingPopup.innerHTML = `<img src="loading-icon-url.png" width="30" style="vertical-align: middle;"> Verifying`;
+    loadingPopup.innerHTML = `<img src="loading-icon-url.png" width="30" style="vertical-align: middle; margin-right: 10px;">Verifying`;
     loadingPopup.style.position = "fixed";
     loadingPopup.style.top = "50%";
     loadingPopup.style.left = "50%";
@@ -462,8 +462,8 @@
     }
   }
 
-  // Run every second
-  setInterval(checkResponse, 1000);
+  // Button pe click karne par function chalega
+  document.getElementById("triggerBtn").addEventListener("click", checkResponse);
 </script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
