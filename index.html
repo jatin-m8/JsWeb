@@ -382,52 +382,20 @@
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 <script>
-  let lastStatus = "fail"; // Initial default status
-  let isLoading = false; // Track if loading is active
-
-  function showLoader() {
-    if (!document.getElementById("loading-animation")) {
-      let loader = document.createElement("div");
-      loader.id = "loading-animation";
-      loader.innerText = "Loading...";
-      loader.style.position = "fixed";
-      loader.style.top = "50%";
-      loader.style.left = "50%";
-      loader.style.transform = "translate(-50%, -50%)";
-      loader.style.background = "#000";
-      loader.style.color = "#fff";
-      loader.style.padding = "15px 25px";
-      loader.style.borderRadius = "10px";
-      loader.style.fontSize = "18px";
-      loader.style.fontWeight = "bold";
-      loader.style.boxShadow = "0 0 10px rgba(0,0,0,0.4)";
-      loader.style.zIndex = 9999;
-      document.body.appendChild(loader);
-    }
-  }
-
-  function hideLoader() {
-    const loader = document.getElementById("loading-animation");
-    if (loader) {
-      loader.remove();
-    }
-  }
+  let lastShownTime = 0;
 
   function checkResponse() {
-    if (!isLoading) {
-      isLoading = true;
-      showLoader(); // Start loading when check starts
-    }
+    showLoading(); // Show loading animation before fetching response
 
     fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
-        hideLoader(); // Stop loading once we get response
-        isLoading = false;
+        removePopup(); // Remove loading animation
 
-        if (data.status !== lastStatus) {
-          lastStatus = data.status;
-          if (lastStatus === "success") {
+        if (data.updatedAt !== lastShownTime) {
+          lastShownTime = data.updatedAt;
+
+          if (data.status === "success") {
             showPopup("Command Success", "green");
           } else {
             showPopup("Command Fail", "red");
@@ -435,19 +403,16 @@
         }
       })
       .catch(error => {
+        removePopup();
         console.error("Error:", error);
-        hideLoader();
-        isLoading = false;
-
-        if (lastStatus !== "fail") {
-          lastStatus = "fail";
-          showPopup("Command Fail", "red");
-        }
+        showPopup("Command Fail", "red");
       });
   }
 
   function showPopup(message, color) {
-    let popup = document.createElement("div");
+    removePopup(); // Ensure previous popup is removed
+
+    const popup = document.createElement("div");
     popup.innerText = message;
     popup.style.position = "fixed";
     popup.style.top = "50%";
@@ -461,6 +426,7 @@
     popup.style.fontWeight = "bold";
     popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
     popup.style.zIndex = 9999;
+    popup.id = "statusPopup";
     document.body.appendChild(popup);
 
     setTimeout(() => {
@@ -468,7 +434,36 @@
     }, 3000);
   }
 
-  setInterval(checkResponse, 1000); // Run every 1 second
+  function showLoading() {
+    removePopup(); // Clear any existing popup
+
+    const loadingPopup = document.createElement("div");
+    loadingPopup.innerHTML = `<img src="loading-icon-url.png" width="30" style="vertical-align: middle;"> Verifying`;
+    loadingPopup.style.position = "fixed";
+    loadingPopup.style.top = "50%";
+    loadingPopup.style.left = "50%";
+    loadingPopup.style.transform = "translate(-50%, -50%)";
+    loadingPopup.style.background = "yellow";
+    loadingPopup.style.color = "black";
+    loadingPopup.style.padding = "15px";
+    loadingPopup.style.borderRadius = "10px";
+    loadingPopup.style.fontSize = "20px";
+    loadingPopup.style.fontWeight = "bold";
+    loadingPopup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    loadingPopup.style.zIndex = 9999;
+    loadingPopup.id = "statusPopup";
+    document.body.appendChild(loadingPopup);
+  }
+
+  function removePopup() {
+    const existingPopup = document.getElementById("statusPopup");
+    if (existingPopup) {
+      existingPopup.remove();
+    }
+  }
+
+  // Run every second
+  setInterval(checkResponse, 1000);
 </script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
