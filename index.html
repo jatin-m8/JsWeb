@@ -451,37 +451,37 @@ function createPopup(message, bgColor, options = {}) {
   }
 }
 
+let pollingInterval = null;
+
 function checkResponse() {
   // Step 1: Show loading popup
   createPopup("Checking status...", "#facc15", { loading: true, showClose: true });
 
-  // Step 2: Fetch the latest status
-  fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-    method: "GET",
-    cache: "no-store"
-  })
-  .then(response => response.json())
-  .then(data => {
-    // Step 3: Wait extra 2.5 seconds before showing status
-    setTimeout(() => {
-      const loading = document.getElementById("statusPopup");
-      if (loading) loading.remove();
+  // Step 2: Start polling every 1 second
+  pollingInterval = setInterval(() => {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+      method: "GET",
+      cache: "no-store"
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success" || data.status === "fail") {
+        clearInterval(pollingInterval); // stop polling
+        const loading = document.getElementById("statusPopup");
+        if (loading) loading.remove();
 
-      if (data.status === "success") {
-        createPopup("Command Success", "#4ade80");
-      } else {
-        createPopup("Command Fail", "#f87171");
+        // Step 3: Show the actual result
+        if (data.status === "success") {
+          createPopup("Command Success", "#4ade80");
+        } else {
+          createPopup("Command Fail", "#f87171");
+        }
       }
-    }, 2500); // 2.5 seconds extra delay
-  })
-  .catch(err => {
-    console.error(err);
-    setTimeout(() => {
-      const loading = document.getElementById("statusPopup");
-      if (loading) loading.remove();
-      createPopup("Command Fail", "#f87171");
-    }, 2500);
-  });
+    })
+    .catch(err => {
+      console.error("Polling error:", err);
+    });
+  }, 1000); // check every 1 second
 }
 </script>
 
