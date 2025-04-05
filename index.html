@@ -1,0 +1,661 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">  
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+ <title>Macrodroid Integration</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="JS/jquery-3.6.3.js"></script>
+</head>
+<body>
+  <h1 class="centerheading">Macrodroid Automation</h1>
+  <div class="box">
+    <span class="title">Touch Actions Via </span><br>
+    <span style="color:white;font-weight: bold;">Select Method: </span>
+    <input type="button" id="TA-BTN" value="X,Y" class="xy TA-BTN" selected>
+    <input type="button" id="TA-BTN" value="Text" class="text TA-BTN">
+    <input type="button" id="TA-BTN" value="View Id" class="id TA-BTN">
+    <input type="button" id="TA-BTN" value="Gesture" class="gesture TA-BTN"><br><br>
+  <section id="xy">
+    <label>X Location: </label>
+    <input type="text" id="X"><br>
+    <label>Y Location: </label>
+    <input type="text" id="Y"><br>
+    <button class="button" id="cmdsend" onclick="senddata('?X='+val('X')+'&Y='+val('Y'))">Test</button>
+  </section>
+  <section id="text">
+    <label>Text: </label>
+    <input type="text" id="txt"><br>
+    <button class="button" id="cmdsend" onclick="senddata('?text='+val('txt'))">Test</button>
+  </section>
+  <section id="id">
+    <label>View Id: </label>
+    <input type="text" id="idval"><br>
+    <button class="button" id="cmdsend" onclick="senddata('?id='+val('idval')+'&subject='+val('subject'))">Test</button>
+  </section>
+  <section id="gesture">
+    <label>SX: </label>
+    <input type="text" id="SX"><br>
+    <label>SY: </label>
+    <input type="text" id="SY"><br>
+    <label>EX: </label>
+    <input type="text" id="EX"><br>
+    <label>EY: </label>
+    <input type="text" id="EY"><br>
+    <button class="button"id="cmdsend"  onclick="senddata('?SX='+val('SX')+'&SY='+val('SY')+'&EX='+val('EX')+'&EY='+val('EY'))">Test</button>
+  </section>
+  </div>
+  <div class="box">
+    <span class="title">Display Dialog</span><br>
+    <label>Title : </label>
+    <input type="text" id="ttl"><br>
+    <label>Description : </label>
+    <input type="text" id="desc"><br>
+    <button class="button"id="cmdsend"  onclick="senddata('?ttl='+val('ttl')+'&msg='+val('desc')+'&Store=message')">Send</button>
+  </div>
+  <div class="box">
+    <span class="title">Popup (Toast)</span><br>
+    <label>Input : </label>
+    <input type="text" class="ITFD" id="popup"><br>
+    <button class="button" id="cmdsend" onclick="senddata('?popup='+val('popup'))">Test</button>
+  </div>
+  <div class="box">
+    <span class="title">Show Notification</span><br>
+    <label>Title : </label>
+    <input type="text" id="ttln"><br>
+    <label>Description : </label>
+    <input type="text" id="descn"><br>
+    <button id="cmdsend" onclick="senddata('?ttl='+val('ttln')+'&msg='+val('descn')+'&Store=notimessage')">Test</button>
+  </div>
+  <div class="box">
+    <span class="title">Speak Something</span><br>
+    <label>Input : </label>
+    <input type="text" id="tolk"><br>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?tolk='+val('tolk')+'&Store=Ftolk')">Tolk Now</button>
+  </div>
+
+<div class="box">
+    <span class="title">Play Any Link</span><br>
+    <label>Input : </label>
+    <input type="text" id="stringx"><br>
+    <button id="cmdsend" onclick="senddata('?stringx='+val('stringx')+'&Store=link')">Test</button>
+  </div>
+
+<div class="box">
+    <span class="title">Call Making & Forwarding</span><br>
+    <label>Input : </label>
+    <input type="text" id="call"><br>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?stringx='+val('call')+'&Store=call')">Proform</button>
+  </div>
+
+<div class="box">
+    <span class="title">Listen To Live Audio</span><br>
+    <label>Input : </label>
+    <input type="text" id="liveaudio"><br>
+    <button id="cmdsend" onclick="senddata('?stringx='+val('liveaudio')+'&Store=liveaudio')">Test</button>
+    <button id="cmdsend" style="margin: 5px;display: inline;" id="simple" onclick="senddata('?Store=stplivado')">Stop/Normal</button>
+</div>
+
+  <div class="box">
+    <span class="title">Floating Text</span><br>
+    <label>Text : </label>
+    <input type="text" id="ftxt"><br>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?ftext='+val('ftxt')+'&Store=floaton')">Test</button>
+    <button id="cmdsend" style="margin: 5px;display: inline;" onclick="senddata('?Store=floatoff')">Disable Floating Text</button>  
+  </div>
+  <div class="box">
+    <span class="title">Paste Text</span><br>
+    <label>Text: </label>
+    <input type="text" id="paste"><br>
+    <button id="cmdsend" onclick="senddata('?paste='+val('paste'))">Test</button>
+    <button class="cmdsend" id="triggerBtn" style="margin: 5px;display: inline;" onclick="senddata('?paste=clrscr')">Clear Input Field</button>
+  </div>
+  <div class="box">
+    <span class="title">DIM Screen</span><br>
+    <label>Input (0-100) : </label>
+    <input type="text" id="dim"><br>
+    <button id="cmdsend" onclick="senddata('?DIM='+val('dim'))">Test</button>
+    <button class="cmdsend" id="triggerBtn" style="margin: 5px;display: inline;" onclick="senddata('?Store=dimoff')">Dim Screen Off</button>
+  </div>
+  <div class="box">
+    <span class="title">Control Brightness</span><br>
+    <label>Input (0-100) : </label>
+    <input type="text" id="brts"><br>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
+  </div>
+  <div class="box">
+    <span class="title">Telegram Bot Connection</span><br>
+    <label>Api Token : </label>
+    <input type="text" id="api"><br>
+    <label>Chat id : </label>
+    <input type="text" id="c_id"><br>
+    <button id="cmdsend" onclick="senddata('?api='+val('api')+'&c_id='+val('c_id')+'&Store=botconnect')">Connect</button>
+  </div>
+  <div class="box">
+    <div id="simplevar">
+      <span class="title">Variable Control</span>
+      <br>
+      <label>Var Name : </label>
+      <input type="text" id="varname"><br>
+      <label>Var Value : </label>
+      <input type="text" id="varvalue"><br>
+      <button id="cmdsend" onclick="senddata('?'+val('varname')+'='+val('varvalue'))">Test</button>
+      <button id="cmdsend" style="margin: 5px;display: inline;" id="advanced">Advanced Mode (Multi Var)</button>
+    </div>
+    <div id="advancedvar">
+      <span class="title">Advanced Variable Control</span>
+      <br>
+      <label>Input : </label>
+      <input type="text" id="parameters"><br><br>
+      <span style="color:white;">Example: intparam=13&strparam&boolparam=false</span><br>
+      <button id="cmdsend" onclick="senddata('?'+val('parameters'))">Test</button>
+      <button id="cmdsend" style="margin: 5px;display: inline;" id="simple">Go To Normal Mode</button>
+    </div>
+  </div>
+
+
+<!-- Quick button-->
+<div class="quickcont">
+        <button class="quickbtn" id="triggerBtn" onclick="senddata('?Store=torch')">Home</button>
+        <button class="quickbtn" id="triggerBtn" onclick="senddata('?Store=torch')">About</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Services</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Portfolio</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Contact</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Blog</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Gallery</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Pricing</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">FAQ</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Support</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Login</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Register</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Profile</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Dashboard</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Settings</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">News</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Events</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Products</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Features</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Reviews</button>
+    </div>
+
+
+  <div class="wrapper">
+    <div class="dropdown-container">
+
+        <!-- Dropdown 1 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Trigger area <i class="fa fa-caret-down"></i></button>
+  <div class="dropdown-content">
+      
+    <div onclick="SOB(this, 'Botton 1');senddata('?Store=one');">take photo<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 2');senddata('?Store=two');">torch<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 3');senddata('?Store=three');">Floating text<span class="tick">✔</span></div>
+    
+            </div>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">About the way come<i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Mission');senddata('?Store=dndon');">Botton 1<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Vision')">Botton 2<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Goals');senddata('?Store=three');">Botton 3<span class="tick">✔</span></div>
+            </div>
+        </div>
+
+        <!-- Dropdown 3 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Services <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Web Design')">Web Design <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'SEO')">SEO <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Marketing')">Marketing <span class="tick">✔</span></div>
+            </div>
+        </div>
+
+ <!-- Dropdown 1 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Trigger area <i class="fa fa-caret-down"></i></button>
+  <div class="dropdown-content">
+      
+    <div onclick="SOB(this, 'Botton 1');senddata('?Store=one');">take photo<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 2');senddata('?Store=two');">torch<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 3');senddata('?Store=three');">Floating text<span class="tick">✔</span></div>
+    
+            </div>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">About <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Mission');senddata('?Store=dndon');">Botton 1<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Vision')">Botton 2<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Goals');senddata('?Store=three');">Botton 3<span class="tick">✔</span></div>
+            </div>
+        </div>
+
+        <!-- Dropdown 3 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Services <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Web Design')">Web Design <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'SEO')">SEO <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Marketing')">Marketing <span class="tick">✔</span></div>
+            </div>
+        </div>
+
+ <!-- Dropdown 1 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">WhatsApp  Pages<i class="fa fa-caret-down"></i></button>
+  <div class="dropdown-content">
+      
+    <div onclick="SOB(this, 'Whatsapp Camera');senddata('?Pages=wpcamera');">Camera<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'WhatsApp Chat');senddata('?Pages=wpchat');">Chat<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 3');senddata('?Store=three');">Floating text<span class="tick">✔</span></div>
+    
+            </div>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">About <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Mission');senddata('?Store=dndon');">Botton 1<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Vision')">Botton 2<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Goals');senddata('?Store=three');">Botton 3<span class="tick">✔</span></div>
+            </div>
+        </div>
+
+        <!-- Dropdown 3 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Services <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Web Design')">Web Design <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'SEO')">SEO <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Marketing')">Marketing <span class="tick">✔</span></div>
+            </div>
+        </div>
+
+ <!-- Dropdown 1 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Trigger area <i class="fa fa-caret-down"></i></button>
+  <div class="dropdown-content">
+      
+    <div onclick="SOB(this, 'Botton 1');senddata('?Store=one');">take photo<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 2');senddata('?Store=two');">torch<span class="tick">✔</span></div>
+    
+    <div onclick="SOB(this, 'Botton 3');senddata('?Store=three');">Floating text<span class="tick">✔</span></div>
+    
+            </div>
+        </div>
+
+        <!-- Dropdown 2 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">About <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Mission');senddata('?Store=dndon');">Botton 1<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Vision')">Botton 2<span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Goals');senddata('?Store=three');">Botton 3<span class="tick">✔</span></div>
+            </div>
+        </div>
+
+        <!-- Dropdown 3 -->
+        <div class="dropdown">
+            <button class="dropbtn" onclick="TDB(this)">Services <i class="fa fa-caret-down"></i></button>
+            <div class="dropdown-content">
+                <div onclick="SOB(this, 'Web Design')">Web Design <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'SEO')">SEO <span class="tick">✔</span></div>
+                <div onclick="SOB(this, 'Marketing')">Marketing <span class="tick">✔</span></div>
+            </div>
+        </div>
+
+       </div>
+    </div>
+
+
+  <div>
+    <table> 
+      <tr>
+        <td><span class="button" onclick="senddata('?text=RECENT')">Recent</span></td>
+        <td><span class="button" onclick="senddata('?text=HOME')">Home</span></td>
+        <td><span class="button" onclick="senddata('?text=BACK')">Back</span></td>
+      </tr>
+      <tr>
+        <td><span class="button" onclick="senddata('?Store=dndon')">DND ON</span></td>
+        <td><span class="button" onclick="senddata('?Store=dndoff')">DND OFF</span></td>
+        <td><span class="button" onclick="senddata('?Store=lock')">Lock Screen</span></td>
+      </tr>
+      <tr>
+        <td><span class="button" onclick="senddata('?Store=wifion')">Wifi On</span></td>
+        <td><span class="button" onclick="senddata('?Store=wifioff')">Wifi Off</span></td>
+        <td><span class="button" onclick="senddata('?Store=torch')">Torch Toggle</span></td>
+      </tr>
+      <tr>
+        <td><span class="button" onclick="senddata('?Store=bton')">Bluetooth On</span></td>
+        <td><span class="button" onclick="senddata('?Store=btoff')">Bluetooth Off</span></td>
+        <td><span class="button" onclick="senddata('?Store=takephoto')">Take Selfie</span></td>
+      </tr>
+      <tr>
+        <td><span class="button" onclick="senddata('?Store=htspton')">Hotspot On</span></td>
+        <td><span class="button" onclick="senddata('?Store=htsptoff')">Hotspot Off</span></td>
+        <td><span class="button" onclick="senddata('?Store=fullvolume')">Full Volume</span></td>
+      </tr>
+      <tr>
+        <td><span class="button" onclick="senddata('?text=ENOTIBAR')">Expand Notification Bar</span></td>
+        <td><span class="button" onclick="senddata('?text=CNOTIBAR')">Collapse Notification Bar</span></td>
+        <td><span class="button" onclick="senddata('?Store=alarm')">Ring Alarm At Full Volume</span></td>
+      </tr>
+      <tr style="text-align: center;">
+      <td colspan="3"><span class="button" style="width: 90%;" onclick="senddata('?Store=cancel')">Stop Alarm</span></td>
+      </tr>
+      <tr style="text-align: center;">
+      <td colspan="3"><span class="button" style="width: 90%;" onclick="senddata('?Store=DISABLEMACRODROID')">Disable MD</span></td>
+
+
+
+
+    <div id="openModal" class="modalDialog">
+      <div>
+        <h2>Enter Your Webhook URL Below: </h2>
+        <input type="text" id="webhookurl" placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042-cf22cffe6bwc/enablewebhook">
+        <p><span class="white">Disclaimer:</span> This website will never store or send your private information like webhook url and your activities. For Confirmation, You Can Inspect Code. Thank You<br><br><span class="white">Developer:</span> <span class="heart">&#10084;</span> From Mr Jatin</p><span id="warning"></span>
+        <div class="right"><input type="button" id="websaver" value="Proceed"></div>
+      </div>
+    </div>
+
+  <iframe src="" width="0" height="0" style={display:none}></iframe>
+  <center>
+    <div class="spcl" style="color: white;text-align:center;font-weight: bold;">Note: You must have to install macro named <a href="https://macrodroidlink.com/macrostore?id=12667" style="color: rgb(0, 221, 255);text-decoration: none;font-weight: bold;display: inline;">"Control Device Remotely (From Website) 15+ Features"</a> in your device to use this Web controller.<br><br>Developed By: <span class="heart">&#10084;</span> From Mr Jatin</div>
+  </center>
+
+
+<!-- 🤍🤍 Write your Script code 🤍🤍 -->
+
+<script>
+
+const existing = document.getElementById("statusPopup");
+if (existing) {
+  existing.style.animation = "popupOut 0.4s forwards ease-in";  // Fade out effect
+  setTimeout(() => existing.remove(), 400);                     // 400ms me remove
+}
+
+    let lastShownTime = 0;
+    let intervalStarted = false;
+
+
+    document.getElementById('triggerBtn').addEventListener('click', () => {
+      showLoadingPopup();  // Show loading only once on trigger
+      checkResponse();     // Initial check
+      if (!intervalStarted) {
+        setInterval(checkResponse, 1000);  // Auto check every 1 second
+        intervalStarted = true;
+      }
+    });
+
+    function createPopup(content, bgColor, showClose = false, autoClose = false) {
+      const existing = document.getElementById("statusPopup");
+      if (existing) existing.remove();
+
+      const popup = document.createElement("div");
+      popup.className = "popup";
+      popup.id = "statusPopup";
+      popup.style.background = bgColor;
+
+      if (showClose) {
+        const closeBtn = document.createElement("button");
+        closeBtn.className = "close-btn";
+        closeBtn.innerHTML = "&times;";
+        closeBtn.onclick = () => {
+          popup.style.animation = "popupOut 0.4s forwards ease-in";
+          setTimeout(() => popup.remove(), 400);
+        };
+        popup.appendChild(closeBtn);
+      }
+
+      if (typeof content === "string") {
+        const msg = document.createElement("span");
+        msg.innerText = content;
+        popup.appendChild(msg);
+      } else {
+        popup.appendChild(content);
+      }
+
+      document.body.appendChild(popup);
+
+      if (autoClose) {
+        setTimeout(() => {
+          popup.style.animation = "popupOut 0.4s forwards ease-in";
+          setTimeout(() => popup.remove(), 400);
+        }, 2000);
+      }
+    }
+
+    function showLoadingPopup() {
+      const container = document.createElement("div");
+      container.style.display = "flex";
+      container.style.alignItems = "center";
+      container.style.justifyContent = "center";
+      container.style.gap = "12px";
+
+      const img = document.createElement("img");
+      img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
+      img.alt = "Loading...";
+      img.className = "img-spinner";
+
+      const message = document.createElement("span");
+      message.innerText = "Verifying";
+      container.appendChild(img);
+      container.appendChild(message);
+
+      createPopup(container, "#facc15", true);
+    }
+
+    function checkResponse() {
+      fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+        method: "GET",
+        cache: "no-store"
+      })
+      .then(response => response.json())
+      .then(data => {
+        if (data.updatedAt !== lastShownTime) {
+          lastShownTime = data.updatedAt;
+
+          if (data.status === "success") {
+            createPopup("Command Success", "#4ade80", false, true);
+          } else {
+            createPopup("Command Fail", "#f87171", false, true);
+          }
+        }
+      })
+      .catch(err => {
+        console.error(err);
+        createPopup("Command Fail", "#f87171", false, true);
+      });
+    }
+  </script>
+
+<!-- 🤍🤍 Write your Script code 🤍🤍 -->
+
+
+<!--
+<script>
+document.getElementById('triggerBtn').addEventListener('click', checkResponse);
+
+function createPopup(message, bgColor, options = {}) {
+  // Remove existing popup if any
+  const existing = document.getElementById("statusPopup");
+  if (existing) existing.remove();
+
+  const popup = document.createElement("div");
+  popup.className = "popup";
+  popup.id = "statusPopup";
+  popup.style.background = bgColor;
+
+  // Center content
+  popup.style.display = "flex";
+  popup.style.flexDirection = "row";
+  popup.style.alignItems = "center";
+  popup.style.justifyContent = "center";
+  popup.style.textAlign = "center";
+  popup.style.position = "fixed";
+  popup.style.top = "50%";
+  popup.style.left = "50%";
+  popup.style.transform = "translate(-50%, -50%)";
+  popup.style.width = "auto";
+  popup.style.minWidth = "240px";
+
+  // Add message or content
+  if (options.loading) {
+    const img = document.createElement("img");
+    img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
+    img.alt = "Loading...";
+    img.className = "img-spinner";
+    popup.appendChild(img);
+  }
+
+  const text = document.createElement("span");
+  text.innerText = message;
+  text.style.marginLeft = options.loading ? "10px" : "0";
+  popup.appendChild(text);
+
+  // Close button for loading only
+  if (options.showClose) {
+    const closeBtn = document.createElement("button");
+    closeBtn.innerHTML = "&times;";
+    closeBtn.style.position = "absolute";
+    closeBtn.style.top = "6px";
+    closeBtn.style.right = "10px";
+    closeBtn.style.background = "transparent";
+    closeBtn.style.border = "none";
+    closeBtn.style.color = "#0f172a";
+    closeBtn.style.fontSize = "24px";
+    closeBtn.style.cursor = "pointer";
+    closeBtn.onclick = () => {
+      popup.style.animation = "popupOut 0.4s forwards ease-in";
+      setTimeout(() => popup.remove(), 400);
+    };
+    popup.appendChild(closeBtn);
+  }
+
+  document.body.appendChild(popup);
+
+  // Auto close after 2s if not loading
+  if (!options.loading) {
+    setTimeout(() => {
+      popup.style.animation = "popupOut 0.4s forwards ease-in";
+      setTimeout(() => popup.remove(), 400);
+    }, 2000);
+  }
+}
+
+let pollingInterval = null;
+
+function checkResponse() {
+  // Step 1: Show loading popup
+  createPopup("Checking status...", "#facc15", { loading: true, showClose: true });
+
+  // Step 2: Start polling every 1 second
+  pollingInterval = setInterval(() => {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+      method: "GET",
+      cache: "no-store"
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success" || data.status === "fail") {
+        clearInterval(pollingInterval); // stop polling
+        const loading = document.getElementById("statusPopup");
+        if (loading) loading.remove();
+
+        // Step 3: Show the actual result
+        if (data.status === "success") {
+          createPopup("Command Success", "#4ade80");
+        } else {
+          createPopup("Command Fail", "#f87171");
+        }
+      }
+    })
+    .catch(err => {
+      console.error("Polling error:", err);
+    });
+  }, 1000); // check every 1 second
+}
+</script>
+-->
+
+
+
+
+<script>
+        function TDB(button) {
+            let dropdown = button.nextElementSibling;
+
+            // Sabhi dropdowns ko close karo
+            document.querySelectorAll(".dropdown-content").forEach(d => {
+                if (d !== dropdown) d.style.display = "none";
+            });
+
+            // Clicked dropdown ko toggle karo
+            if (dropdown.style.display === "block") {
+                dropdown.style.display = "none";
+            } else {
+                dropdown.style.display = "block";
+
+                // **Dropdown position adjust karna taaki screen ke bahar na jaye**
+                let rect = dropdown.getBoundingClientRect();
+                let screenWidth = window.innerWidth;
+
+                if (rect.right > screenWidth) {
+                    dropdown.style.left = `-${rect.width - button.offsetWidth}px`;
+                } else {
+                    dropdown.style.left = "0";
+                }
+            }
+        }
+
+        function SOB(selected, optionText) {
+            let dropdown = selected.closest('.dropdown-content');
+
+            // Sabhi options se "selected" class hatana
+            dropdown.querySelectorAll('div').forEach(div => div.classList.remove('selected'));
+
+            // Click kiya hua option "selected" class me daalna
+            selected.classList.add('selected');
+
+            // 50ms ke baad dropdown hide karna (permanent nahi, dubara open ho sake)
+            setTimeout(() => {
+                dropdown.style.display = 'none';
+            }, 50);
+
+            // Alert ya custom action
+            alert(`You selected: ${optionText}`);
+        }
+
+        // Dropdown ko close karne ka logic (Jab user kahin aur click kare)
+        document.addEventListener("click", function (event) {
+            let isDropdownButton = event.target.classList.contains("dropbtn");
+            let isDropdownContent = event.target.closest(".dropdown-content");
+
+            // Agar click kisi button ya dropdown-content pe nahi hua to sabko close kar do
+            if (!isDropdownButton && !isDropdownContent) {
+                document.querySelectorAll(".dropdown-content").forEach(dropdown => {
+                    dropdown.style.display = "none";
+                });
+            }
+        });
+
+    </script>
+
+</body>
+<script src="JS/main.js"></script>
+</html>
