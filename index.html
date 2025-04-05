@@ -379,95 +379,63 @@
   </center>
 
 
+<!-- 🤍🤍 Write your Script code 🤍🤍 -->
+
 <script>
+  document.getElementById('triggerBtn').addEventListener('click', function () {
+    sendTrigger();
+    setTimeout(checkResponse, 2000); // 2 second baad response check hoga
+  });
+
+  function sendTrigger() {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ action: "success" }) // MacroDroid action trigger karega
+    }).catch(error => console.error("Trigger Error:", error));
+  }
+
   function checkResponse() {
-    showLoader(true); // Show loading
-
-    fetch("https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response")
-      .then(response => response.json())
-      .then(data => {
-        showLoader(false); // Hide loader
-
-        if (data.status === "success") {
-          showPopup("Command Success", "green");
-        } else {
-          showPopup("Command Fail", "red");
-        }
-      })
-      .catch(error => {
-        showLoader(false);
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+      method: "GET"
+    })
+    .then(response => response.json())
+    .then(data => {
+      if (data.status === "success") {
+        showPopup("Command Success", "green");
+      } else {
         showPopup("Command Fail", "red");
-        console.error("Error:", error);
-      });
+      }
+    })
+    .catch(error => {
+      console.error("Error:", error);
+      showPopup("Command Fail", "red");
+    });
   }
 
   function showPopup(message, color) {
-    const popup = document.createElement("div");
+    let popup = document.createElement("div");
     popup.innerText = message;
     popup.style.position = "fixed";
     popup.style.top = "50%";
     popup.style.left = "50%";
     popup.style.transform = "translate(-50%, -50%)";
-    popup.style.backgroundColor = color;
-    popup.style.color = "white";
-    popup.style.padding = "12px 24px";
+    popup.style.background = color;
+    popup.style.color = "black";
+    popup.style.padding = "15px";
     popup.style.borderRadius = "10px";
-    popup.style.fontSize = "18px";
+    popup.style.fontSize = "20px";
     popup.style.fontWeight = "bold";
-    popup.style.boxShadow = "0 0 12px rgba(0,0,0,0.4)";
-    popup.style.zIndex = 9999;
+    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
     document.body.appendChild(popup);
 
     setTimeout(() => {
       popup.remove();
     }, 3000);
   }
-
-  function showLoader(show) {
-    let loader = document.getElementById("custom-loader");
-
-    if (!loader) {
-      loader = document.createElement("div");
-      loader.id = "custom-loader";
-      loader.style.position = "fixed";
-      loader.style.top = "0";
-      loader.style.left = "0";
-      loader.style.width = "100%";
-      loader.style.height = "100%";
-      loader.style.background = "rgba(255,255,255,0.8)";
-      loader.style.display = "flex";
-      loader.style.alignItems = "center";
-      loader.style.justifyContent = "center";
-      loader.style.zIndex = 9998;
-
-      const spinner = document.createElement("div");
-      spinner.style.width = "50px";
-      spinner.style.height = "50px";
-      spinner.style.border = "6px solid #ccc";
-      spinner.style.borderTop = "6px solid #3498db";
-      spinner.style.borderRadius = "50%";
-      spinner.style.animation = "spin 1s linear infinite";
-
-      loader.appendChild(spinner);
-
-      document.body.appendChild(loader);
-
-      const style = document.createElement("style");
-      style.textContent = `
-        @keyframes spin {
-          0% { transform: rotate(0deg); }
-          100% { transform: rotate(360deg); }
-        }
-      `;
-      document.head.appendChild(style);
-    }
-
-    loader.style.display = show ? "flex" : "none";
-  }
 </script>
 
-
-
+<!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 
 <!--
