@@ -1,15 +1,17 @@
-let latestStatus = "fail"; // Default status globally defined
+let latestStatus = "fail";
+let lastUpdated = Date.now(); // new variable
 
 exports.handler = async function(event, context) {
   try {
-    // Handle POST request from MacroDroid
     if (event.httpMethod === "POST") {
       const requestData = JSON.parse(event.body || "{}");
 
       if (requestData.action === "success") {
         latestStatus = "success";
+        lastUpdated = Date.now(); // update timestamp
       } else if (requestData.action === "fail") {
         latestStatus = "fail";
+        lastUpdated = Date.now(); // update timestamp
       }
 
       return {
@@ -18,11 +20,10 @@ exports.handler = async function(event, context) {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: latestStatus })
+        body: JSON.stringify({ status: latestStatus, updatedAt: lastUpdated })
       };
     }
 
-    // Handle GET request from your webpage to check status
     if (event.httpMethod === "GET") {
       return {
         statusCode: 200,
@@ -30,11 +31,10 @@ exports.handler = async function(event, context) {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: latestStatus })
+        body: JSON.stringify({ status: latestStatus, updatedAt: lastUpdated })
       };
     }
 
-    // If method is neither GET nor POST
     return {
       statusCode: 400,
       headers: {
@@ -45,7 +45,6 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
-    // Error handling
     return {
       statusCode: 500,
       headers: {
