@@ -379,8 +379,7 @@
   </center>
 
 
-
- <script>
+  <script>
     document.getElementById('triggerBtn').addEventListener('click', checkResponse);
 
     function createPopup(content, bgColor, showClose = false, autoClose = false) {
@@ -435,7 +434,7 @@
       img.className = "img-spinner";
 
       const message = document.createElement("span");
-      message.innerText = "Verifying";
+      message.innerText = "Checking status...";
       container.appendChild(img);
       container.appendChild(message);
 
@@ -460,8 +459,6 @@
       });
     }
   </script>
-
-
 
 
 <script>
