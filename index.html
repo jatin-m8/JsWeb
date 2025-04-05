@@ -86,7 +86,7 @@
     <span class="title">Call Making & Forwarding</span><br>
     <label>Input : </label>
     <input type="text" id="call"><br>
-    <button id="cmdsend" id="cmdsend" onclick="senddata('?stringx='+val('call')+'&Store=call')">Test</button>
+    <button class="cmdsend" id="triggerBtn" onclick="senddata('?stringx='+val('call')+'&Store=call')">Proform</button>
   </div>
 
 <div class="box">
@@ -382,15 +382,15 @@
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 <script>
-    let lastShownTime = 0;
-    let intervalStarted = false;
-
 
 const existing = document.getElementById("statusPopup");
 if (existing) {
   existing.style.animation = "popupOut 0.4s forwards ease-in";  // Fade out effect
   setTimeout(() => existing.remove(), 400);                     // 400ms me remove
 }
+
+    let lastShownTime = 0;
+    let intervalStarted = false;
 
 
     document.getElementById('triggerBtn').addEventListener('click', () => {
