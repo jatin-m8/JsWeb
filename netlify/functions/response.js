@@ -1,20 +1,15 @@
-let lastUpdateTime = 0;
-let latestStatus = "fail";
+let latestStatus = "fail"; // Default status globally defined
 
 exports.handler = async function(event, context) {
   try {
-    const now = Date.now();
-
-    // POST: MacroDroid se status update
+    // Handle POST request from MacroDroid
     if (event.httpMethod === "POST") {
       const requestData = JSON.parse(event.body || "{}");
 
       if (requestData.action === "success") {
         latestStatus = "success";
-        lastUpdateTime = now;
-      } else {
+      } else if (requestData.action === "fail") {
         latestStatus = "fail";
-        lastUpdateTime = now;
       }
 
       return {
@@ -27,13 +22,8 @@ exports.handler = async function(event, context) {
       };
     }
 
-    // GET: Website se status check
+    // Handle GET request from your webpage to check status
     if (event.httpMethod === "GET") {
-      // Agar last update 5 seconds se purana hai to status fail kar do
-      if (now - lastUpdateTime > 5000) {
-        latestStatus = "fail";
-      }
-
       return {
         statusCode: 200,
         headers: {
@@ -44,7 +34,7 @@ exports.handler = async function(event, context) {
       };
     }
 
-    // Invalid method
+    // If method is neither GET nor POST
     return {
       statusCode: 400,
       headers: {
@@ -55,6 +45,7 @@ exports.handler = async function(event, context) {
     };
 
   } catch (error) {
+    // Error handling
     return {
       statusCode: 500,
       headers: {
