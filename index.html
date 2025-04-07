@@ -383,11 +383,7 @@
 
 <script>
 
-const existing = document.getElementById("statusPopup");
-if (existing) {
-  existing.style.animation = "popupOut 0.4s forwards ease-in";  // Fade out effect
-  setTimeout(() => existing.remove(), 400);                     // 400ms me remove
-}
+
 
     let lastShownTime = 0;
     let intervalStarted = false;
@@ -482,6 +478,12 @@ if (existing) {
         createPopup("Command Fail", "#f87171", false, true);
       });
     }
+
+  const existing = document.getElementById("statusPopup");
+if (existing) {
+  existing.style.animation = "popupOut 0.4s forwards ease-in";  // Fade out effect
+  setTimeout(() => existing.remove(), 400);                     // 400ms me remove
+  }
   </script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
