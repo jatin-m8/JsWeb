@@ -386,7 +386,11 @@
 
 
 <script>
-document.getElementById('triggerBtn').addEventListener('click', checkResponse);
+document.querySelectorAll('.triggerBtn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      if (!isPolling) checkResponse();
+    });
+  });
 
 function createPopup(message, bgColor, options = {}) {
   // Remove existing popup if any
