@@ -115,14 +115,14 @@
     <span class="title">DIM Screen</span><br>
     <label>Input (0-100) : </label>
     <input type="text" id="dim"><br>
-    <button id="cmdsend" onclick="senddata('?DIM='+val('dim'))">Test</button>
+    <button id="cmdsend" onclick="checkResponse();senddata('?DIM='+val('dim'))">Send</button>
     <button id="cmdsend" style="margin: 5px;display: inline;" onclick="senddata('?Store=dimoff')">Dim Screen Off</button>
   </div>
   <div class="box">
     <span class="title">Control Brightness</span><br>
     <label>Input (0-100) : </label>
     <input type="text" id="brts"><br>
-    <button id="cmdsend" onclick="senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
+    <button id="cmdsend" onclick="checkResponse();senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
   </div>
   <div class="box">
     <span class="title">Telegram Bot Connection</span><br>
