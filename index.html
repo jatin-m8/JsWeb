@@ -66,7 +66,7 @@
     <input type="text" id="ttln"><br>
     <label>Description : </label>
     <input type="text" id="descn"><br>
-    <button id="triggerBtn" id="cmdsend78" onclick="senddata('?ttl='+val('ttln')+'&msg='+val('descn')+'&Store=notimessage')">Send Notification</button>
+    <button id="triggerBtn" id="cmdsend" onclick="senddata('?ttl='+val('ttln')+'&msg='+val('descn')+'&Store=notimessage')">Send Notification</button>
   </div>
   <div class="box">
     <span class="title">Speak Something</span><br>
@@ -94,7 +94,7 @@
     <label>Input : </label>
     <input type="text" id="liveaudio"><br>
     <button id="cmdsend" onclick="senddata('?stringx='+val('liveaudio')+'&Store=liveaudio')">Test</button>
-    <button id="cmdsend" style="margin: 5px;display: inline;" id="simple" onclick="senddata('?Store=stplivado')">Stop/Normal</button>
+    <button id="triggerBtn" id="cmdsend" style="margin: 5px;display: inline;" id="simple" onclick="senddata('?Store=stplivado')">Stop/Normal</button>
 </div>
 
   <div class="box">
