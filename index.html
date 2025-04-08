@@ -388,6 +388,10 @@
 <script>
 document.getElementById('triggerBtn').addEventListener('click', checkResponse);
 
+function createPopup(message, bgColor, options = {}) {
+  // Remove existing popup if any
+  const existing = document.getElementById("statusPopup");
+  if (existing) existing.remove();
 
   const popup = document.createElement("div");
   popup.className = "popup";
