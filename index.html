@@ -157,8 +157,8 @@
 
 <!-- Quick button-->
 <div class="quickcont">
-        <button class="quickbtn" id="triggerBtn" onclick="senddata('?Store=torch')">Home</button>
-        <button class="quickbtn" id="triggerBtn" onclick="senddata('?Store=torch')">About</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">Home</button>
+        <button class="quickbtn" onclick="senddata('?Store=torch')">About</button>
         <button class="quickbtn" onclick="senddata('?Store=torch')">Services</button>
         <button class="quickbtn" onclick="senddata('?Store=torch')">Portfolio</button>
         <button class="quickbtn" onclick="senddata('?Store=torch')">Contact</button>
@@ -382,99 +382,53 @@
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 <script>
-    let lastShownTime = 0;
-    let intervalStarted = false;
+  let lastShownTime = 0;
 
-    document.getElementById('triggerBtn').addEventListener('click', () => {
-      showLoadingPopup();  // Show loading only once on trigger
-      checkResponse();     // Initial check
-      if (!intervalStarted) {
-        setInterval(checkResponse, 1000);  // Auto check every 1 second
-        intervalStarted = true;
-      }
-    });
-
-    function createPopup(content, bgColor, showClose = false, autoClose = false) {
-      const existing = document.getElementById("statusPopup");
-      if (existing) existing.remove();
-
-      const popup = document.createElement("div");
-      popup.className = "popup";
-      popup.id = "statusPopup";
-      popup.style.background = bgColor;
-
-      if (showClose) {
-        const closeBtn = document.createElement("button");
-        closeBtn.className = "close-btn";
-        closeBtn.innerHTML = "&times;";
-        closeBtn.onclick = () => {
-          popup.style.animation = "popupOut 0.4s forwards ease-in";
-          setTimeout(() => popup.remove(), 400);
-        };
-        popup.appendChild(closeBtn);
-      }
-
-      if (typeof content === "string") {
-        const msg = document.createElement("span");
-        msg.innerText = content;
-        popup.appendChild(msg);
-      } else {
-        popup.appendChild(content);
-      }
-
-      document.body.appendChild(popup);
-
-      if (autoClose) {
-        setTimeout(() => {
-          popup.style.animation = "popupOut 0.4s forwards ease-in";
-          setTimeout(() => popup.remove(), 400);
-        }, 2000);
-      }
-    }
-
-    function showLoadingPopup() {
-      const container = document.createElement("div");
-      container.style.display = "flex";
-      container.style.alignItems = "center";
-      container.style.justifyContent = "center";
-      container.style.gap = "12px";
-
-      const img = document.createElement("img");
-      img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
-      img.alt = "Loading...";
-      img.className = "img-spinner";
-
-      const message = document.createElement("span");
-      message.innerText = "Verifying";
-      container.appendChild(img);
-      container.appendChild(message);
-
-      createPopup(container, "#facc15", true);
-    }
-
-    function checkResponse() {
-      fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-        method: "GET",
-        cache: "no-store"
-      })
+  function checkResponse() {
+    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response')
       .then(response => response.json())
       .then(data => {
         if (data.updatedAt !== lastShownTime) {
           lastShownTime = data.updatedAt;
 
           if (data.status === "success") {
-            createPopup("Command Success", "#4ade80", false, true);
+            showPopup("Command Success", "green");
           } else {
-            createPopup("Command Fail", "#f87171", false, true);
+            showPopup("Command Fail", "red");
           }
         }
       })
-      .catch(err => {
-        console.error(err);
-        createPopup("Command Fail", "#f87171", false, true);
+      .catch(error => {
+        console.error("Error:", error);
+        showPopup("Command Fail", "red");
       });
-    }
-  </script>
+  }
+
+  function showPopup(message, color) {
+    const popup = document.createElement("div");
+    popup.innerText = message;
+    popup.style.position = "fixed";
+    popup.style.top = "50%";
+    popup.style.left = "50%";
+    popup.style.transform = "translate(-50%, -50%)";
+    popup.style.background = color;
+    popup.style.color = "white";
+    popup.style.padding = "15px";
+    popup.style.borderRadius = "10px";
+    popup.style.fontSize = "20px";
+    popup.style.fontWeight = "bold";
+    popup.style.boxShadow = "0 0 10px rgba(0,0,0,0.5)";
+    popup.style.zIndex = 9999;
+    document.body.appendChild(popup);
+
+    setTimeout(() => {
+      popup.remove();
+    }, 3000);
+  }
+
+  // Run every second
+  setInterval(checkResponse, 1000);
+</script>
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
