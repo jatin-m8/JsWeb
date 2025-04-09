@@ -381,10 +381,109 @@
 
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
+
+<script>
+    function createPopup(message, bgColor, options = {}) {
+      const existing = document.getElementById("statusPopup");
+      if (existing) existing.remove();
+
+      const popup = document.createElement("div");
+      popup.className = "popup";
+      popup.id = "statusPopup";
+      popup.style.background = bgColor;
+      popup.style.display = "flex";
+      popup.style.alignItems = "center";
+      popup.style.justifyContent = "center";
+      popup.style.position = "fixed";
+      popup.style.top = "50%";
+      popup.style.left = "50%";
+      popup.style.transform = "translate(-50%, -50%)";
+      popup.style.padding = "15px 25px";
+      popup.style.borderRadius = "12px";
+      popup.style.color = "#0f172a";
+      popup.style.fontSize = "16px";
+      popup.style.fontWeight = "bold";
+      popup.style.zIndex = 9999;
+      popup.style.minWidth = "240px";
+
+      if (options.loading) {
+        const img = document.createElement("img");
+        img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
+        img.alt = "Loading...";
+        img.className = "img-spinner";
+        popup.appendChild(img);
+      }
+
+      const text = document.createElement("span");
+      text.innerText = message;
+      text.style.marginLeft = options.loading ? "10px" : "0";
+      popup.appendChild(text);
+
+      if (options.showClose) {
+        const closeBtn = document.createElement("button");
+        closeBtn.innerHTML = "&times;";
+        closeBtn.style.position = "absolute";
+        closeBtn.style.top = "6px";
+        closeBtn.style.right = "10px";
+        closeBtn.style.background = "transparent";
+        closeBtn.style.border = "none";
+        closeBtn.style.color = "#0f172a";
+        closeBtn.style.fontSize = "24px";
+        closeBtn.style.cursor = "pointer";
+        closeBtn.onclick = () => {
+          popup.style.animation = "popupOut 0.4s forwards ease-in";
+          setTimeout(() => popup.remove(), 400);
+        };
+        popup.appendChild(closeBtn);
+      }
+
+      document.body.appendChild(popup);
+
+      if (!options.loading) {
+        setTimeout(() => {
+          popup.style.animation = "popupOut 0.4s forwards ease-in";
+          setTimeout(() => popup.remove(), 400);
+        }, 2500);
+      }
+    }
+
+    let pollingInterval = null;
+
+    document.getElementById('triggerBtn').addEventListener('click', () => {
+      createPopup("Checking status...", "#facc15", { loading: true, showClose: true });
+
+      pollingInterval = setInterval(() => {
+        fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
+          method: "GET",
+          cache: "no-store"
+        })
+        .then(res => res.json())
+        .then(data => {
+          if (data.status === "success" || data.status === "fail") {
+            clearInterval(pollingInterval);
+            const loading = document.getElementById("statusPopup");
+            if (loading) loading.remove();
+
+            if (data.status === "success") {
+              createPopup("✅ Command Success", "#4ade80");
+            } else {
+              createPopup("❌ Action Not Found", "#f87171");
+            }
+          }
+        })
+        .catch(err => {
+          clearInterval(pollingInterval);
+          createPopup("❌ Network Error", "#f87171");
+          console.error("Error fetching response:", err);
+        });
+      }, 1000);
+    });
+  </script>
+
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
 
-
+<!--
 <script>
 document.querySelectorAll('.triggerBtn').forEach(btn => {
     btn.addEventListener('click', () => {
@@ -492,7 +591,7 @@ function checkResponse() {
   }, 1000); // check every 1 second
 }
 </script>
-
+-->
 
 
 <script>
