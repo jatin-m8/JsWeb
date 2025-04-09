@@ -79,7 +79,7 @@
     <span class="title">Play Any Link</span><br>
     <label>Input : </label>
     <input type="text" id="stringx"><br>
-    <button id="triggerBtn" class="cmdsend triggerBtn" onclick="checkResponse();senddata('?stringx='+val('stringx')+'&Store=link')">Run</button>
+    <button id="triggerBtn" class="cmdsend" onclick="checkResponse();senddata('?stringx='+val('stringx')+'&Store=link')">Run</button>
   </div>
 
 <div class="box">
@@ -122,7 +122,7 @@
     <span class="title">Control Brightness</span><br>
     <label>Input (0-100) : </label>
     <input type="text" id="brts"><br>
-    <button id="cmdsend" onclick="checkResponse();senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
+    <button id="cmdsend" id="triggerBtn" onclick="checkResponse();senddata('?brightness='+val('brts')+'&Store=bright')">Test</button>
   </div>
   <div class="box">
     <span class="title">Telegram Bot Connection</span><br>
