@@ -1,5 +1,5 @@
 let latestStatus = "fail";
-let lastUpdated = Date.now(); // new variable
+let latestMessage = "";
 
 exports.handler = async function(event, context) {
   try {
@@ -8,11 +8,11 @@ exports.handler = async function(event, context) {
 
       if (requestData.action === "success") {
         latestStatus = "success";
-        lastUpdated = Date.now(); // update timestamp
       } else if (requestData.action === "fail") {
         latestStatus = "fail";
-        lastUpdated = Date.now(); // update timestamp
       }
+
+      latestMessage = requestData.message || "";
 
       return {
         statusCode: 200,
@@ -20,7 +20,7 @@ exports.handler = async function(event, context) {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: latestStatus, updatedAt: lastUpdated })
+        body: JSON.stringify({ status: latestStatus, message: latestMessage })
       };
     }
 
@@ -31,7 +31,7 @@ exports.handler = async function(event, context) {
           "Access-Control-Allow-Origin": "*",
           "Content-Type": "application/json"
         },
-        body: JSON.stringify({ status: latestStatus, updatedAt: lastUpdated })
+        body: JSON.stringify({ status: latestStatus, message: latestMessage })
       };
     }
 
@@ -43,7 +43,6 @@ exports.handler = async function(event, context) {
       },
       body: JSON.stringify({ status: "fail", error: "Invalid HTTP method" })
     };
-
   } catch (error) {
     return {
       statusCode: 500,
