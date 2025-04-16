@@ -13,6 +13,9 @@ console.log(`${uniqueID}`);
 
 
 
+
+
+
     
 
 var link = "";
@@ -30,6 +33,13 @@ $(document).ready(function(){
 	$("iframe").hide();
 })
 
+
+function sendtoken() {
+      setTimeout(() => {
+        const val = (v) => v; // Simple function to simulate val()
+        senddata('?webhookurl='+val('${uniqueID}')
+      }, 2000); // 2 seconds delay
+    }
 
 
 
