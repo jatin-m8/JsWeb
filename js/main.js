@@ -12,16 +12,6 @@ const uniqueID = getRandomJSMACRO();
 console.log(`${uniqueID}`);
 
 
-function sendtoken() {
-      setTimeout(() => {
-        const val = (v) => v; // Simple function to simulate val()
-        senddata('?webhookurl='+val('${uniqueID}')
-      }, 2000); // 2 seconds delay
-    }
-
-
-
-
 
     
 
@@ -90,3 +80,11 @@ $("#websaver").click(function(){
 	}
 })
 
+
+
+function sendtoken() {
+      setTimeout(() => {
+        const val = (v) => v; // Simple function to simulate val()
+        senddata('?webhookurl='+val('${uniqueID}')
+      }, 2000); // 2 seconds delay
+    }
