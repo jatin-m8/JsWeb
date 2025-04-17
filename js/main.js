@@ -1,3 +1,4 @@
+/*
 function getRandomJSMACRO() {
   const str = "JSMACRO".split("");
   for (let i = str.length - 1; i > 0; i--) {
@@ -11,7 +12,7 @@ function getRandomJSMACRO() {
 const uniqueID = getRandomJSMACRO();
 console.log(`${uniqueID}`);
 
-
+*/
 
     
 
