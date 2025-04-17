@@ -368,11 +368,11 @@
         <p><span class="white">Disclaimer:</span> This website will never store or send your private information like webhook url and your activities. For Confirmation, You Can Inspect Code. Thank You<br><br><span class="white">Developer:</span> <span class="heart">&#10084;</span> From Dhruv Chauhan</p><span id="warning"></span>
         <div class="right">
 
-       <!-- Hidden div for storing random string -->
-<div id="StringToken" style="display: none;"></div>
+      <!-- Hidden div to store the random string -->
+<div id="websaver" style="display:none;"></div>
 
-<!-- Button (text will never change) -->
-<input type="button" id="websaver" value="Proceed" onclick="sendAfterDelay()">
+<!-- Proceed Button -->
+<input type="button" value="Proceed" onclick="sendAfterDelay()">
        </div>
       </div>
     </div>
@@ -486,9 +486,8 @@
   </script>
 
 <!-🤍🤍🤍🤍🤍🤍--->
-
 <script>
-  // Generate random string from "JSMACRO"
+  // Random string from JSMACRO
   function getRandomJSMACRO() {
     const str = "JSMACRO".split("");
     for (let i = str.length - 1; i > 0; i--) {
@@ -498,36 +497,34 @@
     return str.join("");
   }
 
-  // On load: generate and store in data-token
+  // On page load: generate + store in DIV
   window.onload = function () {
     const generatedID = getRandomJSMACRO();
-    document.getElementById("StringToken").setAttribute("data-token", generatedID);
-    console.log("Generated ID:", generatedID);
+    document.getElementById("websaver").textContent = generatedID;
+    console.log("Generated on load:", generatedID);
   };
 
-  // Get value from data attribute
+  // Get value from div
   function val(key) {
-    if (key === 'StringToken') {
-      return document.getElementById("StringToken").getAttribute("data-token");
+    if (key === 'websaver') {
+      return document.getElementById("websaver").textContent;
     }
     return '';
   }
 
-  // Simulate senddata
+  // senddata simulation
   function senddata(data) {
     console.log("senddata called with:", data);
-    // Yahan webhook ya API call kar sakte ho
   }
 
-  // On click: 3 sec delay, then call senddata
+  // Button trigger with delay
   function sendAfterDelay() {
-    const tokenString = '?Token=' + val('uniqueID') + '&Store=Token';
+    const tokenString = '?Token=' + val('websaver') + '&Store=Token';
     setTimeout(() => {
       senddata(tokenString);
-    }, 30);
+    }, 3000);
   }
 </script>
-
 
 <!--
 <script>
