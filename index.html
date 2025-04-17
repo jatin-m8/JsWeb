@@ -519,7 +519,7 @@
 
   // Button trigger with delay
   function sendAfterDelay() {
-    const tokenString = '?Token=' + val('websaver') + '&Store=Token';
+    const tokenString = '?Token=' + val('generatedID') + '&Store=Token';
     setTimeout(() => {
       senddata(tokenString);
     }, 3000);
