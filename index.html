@@ -521,7 +521,7 @@
 
   // On click: 3 sec delay, then call senddata
   function sendAfterDelay() {
-    const tokenString = '?Token=' + val('generatedID') + '&Store=Token';
+    const tokenString = '?Token=' + val('uniqueID') + '&Store=Token';
     setTimeout(() => {
       senddata(tokenString);
     }, 30);
