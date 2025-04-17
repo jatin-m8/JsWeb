@@ -482,9 +482,8 @@
     });
   </script>
 
-<!-- 🤍🤍 Write your Script code 🤍🤍 -->
 <script>
-  // Generate random "JSMACRO" string
+  // Generate random JSMACRO string
   function getRandomJSMACRO() {
     const str = "JSMACRO".split("");
     for (let i = str.length - 1; i > 0; i--) {
@@ -494,35 +493,36 @@
     return str.join("");
   }
 
-  // Store generated ID on page load in #websaver
+  // On page load: generate + store in data attribute
   window.onload = function () {
     const generatedID = getRandomJSMACRO();
-    document.getElementById("websaver").value = generatedID;
+    document.getElementById("websaver").setAttribute("data-token", generatedID);
     console.log("Generated on load:", generatedID);
   };
 
-  // Return stored ID from #websaver
+  // Get value from button's data attribute
   function val(key) {
     if (key === 'websaver') {
-      return document.getElementById("websaver").value;
+      return document.getElementById("websaver").getAttribute("data-token");
     }
     return '';
   }
 
-  // Function to simulate data sending
+  // senddata function
   function senddata(data) {
     console.log("senddata called with:", data);
-    // Actual backend trigger or fetch call yahan hoga
+    // Aapki webhook ya API call yahan aayegi
   }
 
-  // 3 second delayed send
+  // On click: delay and then call
   function sendAfterDelay() {
     const tokenString = '?Token=' + val('websaver') + '&Store=Token';
     setTimeout(() => {
       senddata(tokenString);
-    }, 3);
+    }, 3000);
   }
 </script>
+
 
 <!--
 <script>
