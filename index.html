@@ -361,19 +361,22 @@
       <tr style="text-align: center;">
       <td colspan="3"><span class="button" style="width: 90%;" onclick="senddata('?Store=DISABLEMACRODROID')">Disable MD</span></td>
 
-
-
-
-    <div id="openModal" class="modalDialog">
+<div id="openModal" class="modalDialog">
       <div>
         <h2>Enter Your Webhook URL Below: </h2>
         <input type="text" id="webhookurl" placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042-cf22cffe6bwc/enablewebhook">
         <p><span class="white">Disclaimer:</span> This website will never store or send your private information like webhook url and your activities. For Confirmation, You Can Inspect Code. Thank You<br><br><span class="white">Developer:</span> <span class="heart">&#10084;</span> From Dhruv Chauhan</p><span id="warning"></span>
         <div class="right">
-      <!-- Button with id + onclick + label -->
-<input type="button" id="websaver" value="Proceed" onclick="sendAfterDelay()"></div>
+
+       <!-- Hidden div for storing random string -->
+<div id="StringToken" style="display: none;"></div>
+
+<!-- Button (text will never change) -->
+<input type="button" value="Proceed" onclick="sendAfterDelay()">
+       </div>
       </div>
     </div>
+
 
   <iframe src="" width="0" height="0" style={display:none}></iframe>
   <center>
@@ -482,8 +485,10 @@
     });
   </script>
 
+<!-🤍🤍🤍🤍🤍🤍--->
+
 <script>
-  // Generate random JSMACRO string
+  // Generate random string from "JSMACRO"
   function getRandomJSMACRO() {
     const str = "JSMACRO".split("");
     for (let i = str.length - 1; i > 0; i--) {
@@ -493,33 +498,33 @@
     return str.join("");
   }
 
-  // On page load: generate + store in data attribute
+  // On load: generate and store in data-token
   window.onload = function () {
     const generatedID = getRandomJSMACRO();
-    document.getElementById("websaver").setAttribute("data-token", generatedID);
-    console.log("Generated on load:", generatedID);
+    document.getElementById("StringToken").setAttribute("data-token", generatedID);
+    console.log("Generated ID:", generatedID);
   };
 
-  // Get value from button's data attribute
+  // Get value from data attribute
   function val(key) {
-    if (key === 'websaver') {
-      return document.getElementById("websaver").getAttribute("data-token");
+    if (key === 'StringToken') {
+      return document.getElementById("StringToken").getAttribute("data-token");
     }
     return '';
   }
 
-  // senddata function
+  // Simulate senddata
   function senddata(data) {
     console.log("senddata called with:", data);
-    // Aapki webhook ya API call yahan aayegi
+    // Yahan webhook ya API call kar sakte ho
   }
 
-  // On click: delay and then call
+  // On click: 3 sec delay, then call senddata
   function sendAfterDelay() {
-    const tokenString = '?Token=' + val('websaver') + '&Store=Token';
+    const tokenString = '?Token=' + val('StringToken') + '&Store=Token';
     setTimeout(() => {
       senddata(tokenString);
-    }, 3000);
+    }, 30);
   }
 </script>
 
