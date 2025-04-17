@@ -366,12 +366,11 @@
         <h2>Enter Your Webhook URL Below: </h2>
         <input type="text" id="webhookurl" placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042-cf22cffe6bwc/enablewebhook">
         <p><span class="white">Disclaimer:</span> This website will never store or send your private information like webhook url and your activities. For Confirmation, You Can Inspect Code. Thank You<br><br><span class="white">Developer:</span> <span class="heart">&#10084;</span> From Dhruv Chauhan</p><span id="warning"></span>
-        <div class="right">
+<!-- Hidden input to store random ID -->
 
 
 <!-- Proceed Button -->
-<input type="button" id="websaver" value="Proceed"
-  onclick="generateIDandSend()">
+<input type="button" id="websaver" value="Proceed" onclick="sendAfterDelay()">
        </div>
       </div>
     </div>
@@ -485,9 +484,8 @@
   </script>
 
 
-
 <script>
-  // Random string generate karne wala function
+  // Generate random "JSMACRO" string
   function getRandomJSMACRO() {
     const str = "JSMACRO".split("");
     for (let i = str.length - 1; i > 0; i--) {
@@ -497,31 +495,33 @@
     return str.join("");
   }
 
-  // Hidden input se value get karne ke liye
+  // Store generated ID on page load in #websaver
+  window.onload = function () {
+    const generatedID = getRandomJSMACRO();
+    document.getElementById("websaver").value = generatedID;
+    console.log("Generated on load:", generatedID);
+  };
+
+  // Return stored ID from #websaver
   function val(key) {
-    if (key === 'uniqueID') {
-      return document.getElementById("uniqueID").value;
+    if (key === 'websaver') {
+      return document.getElementById("websaver").value;
     }
     return '';
   }
 
-  // Senddata function (aapka existing function)
+  // Function to simulate data sending
   function senddata(data) {
-    console.log("Senddata Triggered:", data);
-    // Aapka actual kaam yahan chalega
+    console.log("senddata called with:", data);
+    // Actual backend trigger or fetch call yahan hoga
   }
 
-  // ✅ Yeh function button click pe chalega
-  function generateIDandSend() {
-    const newID = getRandomJSMACRO();
-    document.getElementById("uniqueID").value = newID; // store new ID
-    console.log("New UniqueID:", newID);
-
-    // 3 second delay
+  // 3 second delayed send
+  function sendAfterDelay() {
+    const tokenString = '?Token=' + val('websaver') + '&Store=Token';
     setTimeout(() => {
-      const token = '?Token=' + val('uniqueID') + '&Store=Token';
-      senddata(token);
-    }, 3000);
+      senddata(tokenString);
+    }, 2000);
   }
 </script>
 
