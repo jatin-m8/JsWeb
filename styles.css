@@ -163,13 +163,28 @@ border-radius: 6px;
   text-align: right;
 }
 #websaver{
-  padding: 5px;
+  display:none;
 }
-#websaver:active{
+.proceed:active{
   background-color: #01a6b2;
   color: white;
-  border: 2px solid white;
+  
 }
+
+.proceed{
+    color:black;
+    font-size:10px;
+    display:relative ;
+    align-items:center;
+    text-align:center ;
+    font-weight:bold ;
+    background:#fff;
+    border-radius:5px;
+    border:solid white 2px;
+    width:60px;
+    height:20px;
+}
+
 .heart{
   color: red;
   font-size: 18px;
