@@ -162,9 +162,7 @@ border-radius: 6px;
 .right{
   text-align: right;
 }
-#websaver{
-  opacity:0;
-}
+
 .proceed:active{
   background-color: #01a6b2;
   color: white;
