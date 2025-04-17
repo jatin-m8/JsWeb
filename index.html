@@ -2,14 +2,154 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=0.8">  
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
- <title>Macrodroid Integration</title>
+  <meta name="viewport" content="width=device-width, initial-scale=0.8">
+  <title>Phone Controller</title>
+
+  <!-- External Styles -->
   <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+  <!-- External Scripts -->
   <script src="js/jquery-3.6.3.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.5.13/cropper.min.js"></script>
+  <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+  <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
 </head>
+
 <body>
-  <h1 class="centerheading">Macrodroid Automation</h1>
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const navItems = document.querySelectorAll(".nav__item");
+    navItems.forEach((item) => {
+      item.addEventListener("click", () => {
+        navItems.forEach((el) => el.classList.remove("active"));
+        item.classList.add("active");
+      });
+    });
+  });
+</script>
+
+
+<!-- Top Navigation -->
+<div class="topmenu">
+<div class="topnav">
+  <div class="profile-icon" id="profileBtn">
+    <!-- Yeh image nav bar ke profile pic ke liye hai -->
+    <img src="https://i.postimg.cc/cHQMnnnY/1000066088.png" alt="Profile" id="topProfilePic">
+  </div>
+  <div class="title">ZOXIPROX</div>
+  <div class="action-icons">
+    <span class="plus">+</span>
+  </div>
+</div>
+ 
+ <!-- Sidebar Menu -->
+<div class="sidebar" id="sidebar">
+  <div class="sidebar-header">
+    <span><i class="fab fa-codepen"></i> ZOXIPROX</span>
+    <i class="fas fa-angle-left" id="closeBtn"></i>
+  </div>
+
+<!-- Profile Picture Section -->
+<div class="profile-pic-container">
+  <img
+    src="https://i.postimg.cc/cHQMnnnY/1000066088.png"
+    class="profile-pic"
+    alt="Profile"
+  >
+  <i class="fas fa-edit edit-icon"></i>
+  <input type="file" id="fileInput" accept="image/*" style="display: none;">
+</div>
+
+  <ul>
+    <li><i class="fas fa-palette"></i> Your Work</li>
+    <li><i class="fas fa-image"></i> Assets</li>
+    <li><i class="fas fa-thumbtack"></i> Pinned Items</li>
+    <li><i class="fas fa-heart"></i> Following</li>
+    <li class="dropdown"><i class="fas fa-bars"></i> Categories <i class="fas fa-angle-right" style="margin-left:auto;"></i></li>
+    <ul class="submenu">
+      <li>HTML</li>
+      <li>CSS</li>
+      <li>JavaScript</li>
+      <li>React</li>
+    </ul>
+    <li><i class="fas fa-fire"></i> Challenges</li>
+    <li><i class="fas fa-wand-magic-sparkles"></i> Spark</li>
+    <li><i class="fas fa-gem"></i> Codepen Pro</li>
+  </ul>
+</div>
+</div>
+
+
+
+<!-- Bottom Navigation -->
+<nav>
+  <div class="nav-box">
+    <ul class="nav-container">
+      <li class="nav__item">
+        <a href="#Recent" class="nav__item-link">
+          <div class="nav__item-icon">
+            <ion-icon name="time-outline"></ion-icon>
+          </div>
+          <span class="nav__item-text">Recent</span>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a href="#Messages" class="nav__item-link">
+          <div class="nav__item-icon">
+            <ion-icon name="chatbubble-ellipses-outline"></ion-icon>
+          </div>
+          <span class="nav__item-text">Messages</span>
+        </a>
+      </li>
+      <li class="nav__item active">
+        <a href="#Triggers" class="nav__item-link">
+          <div class="nav__item-icon">
+            <ion-icon name="flash-outline"></ion-icon>
+          </div>
+          <span class="nav__item-text">Triggers</span>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a href="#Status" class="nav__item-link">
+          <div class="nav__item-icon">
+            <ion-icon name="stats-chart-outline"></ion-icon>
+          </div>
+          <span class="nav__item-text">Status</span>
+        </a>
+      </li>
+      <li class="nav__item">
+        <a href="#Notification" class="nav__item-link">
+          <div class="nav__item-icon">
+            <ion-icon name="notifications-outline"></ion-icon>
+          </div>
+          <span class="nav__item-text">Notification</span>
+        </a>
+      </li>
+    </ul>
+  </div>
+</nav>
+
+
+<!--content here ❤️❤️❤️-->
+
+<div id="Recent" class="tab-section" style="display: none;">
+  <!-- Existing notification content -->
+  <h1>Recent settlement</h1>
+</div>
+
+<div id="Messages" class="tab-section" style="display: none;">
+  <!-- Existing notification content -->
+  <h1>Message settlement</h1>
+</div>
+
+<div id="Triggers" class="tab-section" style="display: block;">
+  <!-- Existing notification content -->
+  <!--content here ❤️❤️❤️-->
+ <h1 class="centerheading">Macrodroid Automation</h1>
   <div class="box">
     <span class="title">Touch Actions Via </span><br>
     <span style="color:white;font-weight: bold;">Select Method: </span>
@@ -323,51 +463,12 @@
     </div>
 
 
-  <div>
-    <table> 
-      <tr>
-        <td><span class="button" onclick="senddata('?text=RECENT')">Recent</span></td>
-        <td><span class="button" onclick="senddata('?text=HOME')">Home</span></td>
-        <td><span class="button" onclick="senddata('?text=BACK')">Back</span></td>
-      </tr>
-      <tr>
-        <td><span class="button" onclick="senddata('?Store=dndon')">DND ON</span></td>
-        <td><span class="button" onclick="senddata('?Store=dndoff')">DND OFF</span></td>
-        <td><span class="button" onclick="senddata('?Store=lock')">Lock Screen</span></td>
-      </tr>
-      <tr>
-        <td><span class="button" onclick="senddata('?Store=wifion')">Wifi On</span></td>
-        <td><span class="button" onclick="senddata('?Store=wifioff')">Wifi Off</span></td>
-        <td><span class="button" onclick="senddata('?Store=torch')">Torch Toggle</span></td>
-      </tr>
-      <tr>
-        <td><span class="button" onclick="senddata('?Store=bton')">Bluetooth On</span></td>
-        <td><span class="button" onclick="senddata('?Store=btoff')">Bluetooth Off</span></td>
-        <td><span class="button" onclick="senddata('?Store=takephoto')">Take Selfie</span></td>
-      </tr>
-      <tr>
-        <td><span class="button" onclick="senddata('?Store=htspton')">Hotspot On</span></td>
-        <td><span class="button" onclick="senddata('?Store=htsptoff')">Hotspot Off</span></td>
-        <td><span class="button" onclick="senddata('?Store=fullvolume')">Full Volume</span></td>
-      </tr>
-      <tr>
-        <td><span class="button" onclick="senddata('?text=ENOTIBAR')">Expand Notification Bar</span></td>
-        <td><span class="button" onclick="senddata('?text=CNOTIBAR')">Collapse Notification Bar</span></td>
-        <td><span class="button" onclick="senddata('?Store=alarm')">Ring Alarm At Full Volume</span></td>
-      </tr>
-      <tr style="text-align: center;">
-      <td colspan="3"><span class="button" style="width: 90%;" onclick="senddata('?Store=cancel')">Stop Alarm</span></td>
-      </tr>
-      <tr style="text-align: center;">
-      <td colspan="3"><span class="button" style="width: 90%;" onclick="senddata('?Store=DISABLEMACRODROID')">Disable MD</span></td>
-
-
 
 
     <div id="openModal" class="modalDialog">
       <div>
         <h2>Enter Your Webhook URL Below: </h2>
-        <input type="text" id="webhookurl" onclick"sendtoken()" placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042-cf22cffe6bwc/enablewebhook">
+        <input type="text" id="webhookurl" onclick="senddata('?stringx='+val('webhookurl')+'&Store=liveaudio')" placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042-cf22cffe6bwc/enablewebhook">
         <p><span class="white">Disclaimer:</span> This website will never store or send your private information like webhook url and your activities. For Confirmation, You Can Inspect Code. Thank You<br><br><span class="white">Developer:</span> <span class="heart">&#10084;</span> From Mr Jatin</p><span id="warning"></span>
         <div class="right"><input type="button" id="websaver" value="Proceed"></div>
       </div>
@@ -420,239 +521,215 @@
       popup.appendChild(text);
 
       if (options.showClose) {
-        const closeBtn = document.createElement("button");
-        closeBtn.innerHTML = "&times;";
-        closeBtn.style.position = "absolute";
-        closeBtn.style.top = "6px";
-        closeBtn.style.right = "10px";
-        closeBtn.style.background = "transparent";
-        closeBtn.style.border = "none";
-        closeBtn.style.color = "#0f172a";
-        closeBtn.style.fontSize = "24px";
-        closeBtn.style.cursor = "pointer";
-        closeBtn.onclick = () => {
-          popup.style.animation = "popupOut 0.4s forwards ease-in";
-          setTimeout(() => popup.remove(), 400);
-        };
-        popup.appendChild(closeBtn);
-      }
+        const closeBtn = document.createEleme
+  <!--content here ❤️❤️❤️-->
+</div>
 
-      document.body.appendChild(popup);
+<div id="status" class="tab-section" style="display: none;">
+  <!-- Existing notification content -->
+  <h1>Status settlement</h1>
+</div>
 
-      if (!options.loading) {
-        setTimeout(() => {
-          popup.style.animation = "popupOut 0.4s forwards ease-in";
-          setTimeout(() => popup.remove(), 400);
-        }, 2500);
-      }
-    }
+<div id="Notification" class="tab-section" style="display: none;">
+  <!-- Existing notification content -->
+  <h1>Notification settlement</h1>
+</div>
 
-    let pollingInterval = null;
+<div id="cropModal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:#000000aa; justify-content:center; align-items:center; z-index:2000;">
+  <div style="background:white; padding:20px; border-radius:10px; text-align:center;">
+    <h3>Crop Your Image</h3>
+    <img id="cropImage" style="max-width:100%; max-height:400px;">
+    <br/><br/>
+    <button id="cropBtn">Crop & Save</button>
+  </div>
+</div>
 
-    document.getElementById('triggerBtn').addEventListener('click', () => {
-      createPopup("Checking status...", "#facc15", { loading: true, showClose: true });
-
-      pollingInterval = setInterval(() => {
-        fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-          method: "GET",
-          cache: "no-store"
-        })
-        .then(res => res.json())
-        .then(data => {
-          if (data.status === "success" || data.status === "fail") {
-            clearInterval(pollingInterval);
-            const loading = document.getElementById("statusPopup");
-            if (loading) loading.remove();
-
-            if (data.status === "success") {
-              createPopup("✅ Command Success", "#4ade80");
-            } else {
-              createPopup("❌ Action Not Found", "#f87171");
-            }
-          }
-        })
-        .catch(err => {
-          clearInterval(pollingInterval);
-          createPopup("❌ Network Error", "#f87171");
-          console.error("Error fetching response:", err);
-        });
-      }, 1000);
-    });
-  </script>
-
-<!-- 🤍🤍 Write your Script code 🤍🤍 -->
-
-
-<!--
+  <!-- Script -->
 <script>
-document.querySelectorAll('.triggerBtn').forEach(btn => {
-    btn.addEventListener('click', () => {
-      if (!isPolling) checkResponse();
-    });
+  const sidebar = document.getElementById("sidebar");
+  const profileBtn = document.getElementById("profileBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const dropdown = document.querySelector(".dropdown");
+  const submenu = document.querySelector(".submenu");
+  const arrowIcon = dropdown.querySelector(".fa-angle-right");
+
+  const editIcon = document.querySelector(".edit-icon");
+  const fileInput = document.getElementById("fileInput");
+  const profilePic = document.querySelector(".profile-pic");
+  const topProfilePic = document.getElementById("topProfilePic");
+
+  const cropModal = document.getElementById("cropModal");
+  const cropImage = document.getElementById("cropImage");
+  const cropBtn = document.getElementById("cropBtn");
+  let cropper;
+
+  // Sidebar open
+  profileBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
   });
 
-function createPopup(message, bgColor, options = {}) {
-  // Remove existing popup if any
-  const existing = document.getElementById("statusPopup");
-  if (existing) existing.remove();
+  // Sidebar close
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+  });
 
-  const popup = document.createElement("div");
-  popup.className = "popup";
-  popup.id = "statusPopup";
-  popup.style.background = bgColor;
+  // Dropdown menu toggle
+  dropdown.addEventListener("click", () => {
+    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+    arrowIcon.classList.toggle("rotate");
+  });
 
-  // Center content
-  popup.style.display = "flex";
-  popup.style.flexDirection = "row";
-  popup.style.alignItems = "center";
-  popup.style.justifyContent = "center";
-  popup.style.textAlign = "center";
-  popup.style.position = "fixed";
-  popup.style.top = "50%";
-  popup.style.left = "50%";
-  popup.style.transform = "translate(-50%, -50%)";
-  popup.style.width = "auto";
-  popup.style.minWidth = "240px";
+  // Edit icon opens file picker
+  editIcon.addEventListener("click", () => {
+    fileInput.click();
+  });
 
-  // Add message or content
-  if (options.loading) {
-    const img = document.createElement("img");
-    img.src = "https://i.postimg.cc/cHQMnnnY/1000066088.png";
-    img.alt = "Loading...";
-    img.className = "img-spinner";
-    popup.appendChild(img);
-  }
+  // On file select - show cropper modal
+  fileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        cropImage.src = e.target.result;
+        cropModal.style.display = "flex";
 
-  const text = document.createElement("span");
-  text.innerText = message;
-  text.style.marginLeft = options.loading ? "10px" : "0";
-  popup.appendChild(text);
+        setTimeout(() => {
+          if (cropper) cropper.destroy();
+          cropper = new Cropper(cropImage, {
+            aspectRatio: 1,
+            viewMode: 1
+          });
+        }, 100);
+      };
+      reader.readAsDataURL(file);
+    }
+  });
 
-  // Close button for loading only
-  if (options.showClose) {
-    const closeBtn = document.createElement("button");
-    closeBtn.innerHTML = "&times;";
-    closeBtn.style.position = "absolute";
-    closeBtn.style.top = "6px";
-    closeBtn.style.right = "10px";
-    closeBtn.style.background = "transparent";
-    closeBtn.style.border = "none";
-    closeBtn.style.color = "#0f172a";
-    closeBtn.style.fontSize = "24px";
-    closeBtn.style.cursor = "pointer";
-    closeBtn.onclick = () => {
-      popup.style.animation = "popupOut 0.4s forwards ease-in";
-      setTimeout(() => popup.remove(), 400);
-    };
-    popup.appendChild(closeBtn);
-  }
-
-  document.body.appendChild(popup);
-
-  // Auto close after 2s if not loading
-  if (!options.loading) {
-    setTimeout(() => {
-      popup.style.animation = "popupOut 0.4s forwards ease-in";
-      setTimeout(() => popup.remove(), 400);
-    }, 2000);
-  }
-}
-
-let pollingInterval = null;
-
-function checkResponse() {
-  // Step 1: Show loading popup
-  createPopup("Checking status...", "#facc15", { loading: true, showClose: true });
-
-  // Step 2: Start polling every 1 second
-  pollingInterval = setInterval(() => {
-    fetch('https://radiant-longma-9d0a2b.netlify.app/.netlify/functions/response', {
-      method: "GET",
-      cache: "no-store"
-    })
-    .then(response => response.json())
-    .then(data => {
-      if (data.status === "success" || data.status === "fail") {
-        clearInterval(pollingInterval); // stop polling
-        const loading = document.getElementById("statusPopup");
-        if (loading) loading.remove();
-
-        // Step 3: Show the actual result
-        if (data.status === "success") {
-          createPopup("Command Success", "#4ade80");
-        } else {
-          createPopup("Command Fail", "#f87171");
-        }
-      }
-    })
-    .catch(err => {
-      console.error("Polling error:", err);
+  // On crop confirm
+  cropBtn.addEventListener("click", () => {
+    const canvas = cropper.getCroppedCanvas({
+      width: 200,
+      height: 200,
     });
-  }, 1000); // check every 1 second
-}
+    const imageData = canvas.toDataURL("image/png");
+
+    profilePic.src = imageData;
+    topProfilePic.src = imageData;
+    localStorage.setItem("profileImage", imageData);
+
+    cropper.destroy();
+    cropModal.style.display = "none";
+  });
+
+  // On page load - restore image from localStorage
+  window.addEventListener("DOMContentLoaded", () => {
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedImage) {
+      profilePic.src = savedImage;
+      topProfilePic.src = savedImage;
+    }
+  });
 </script>
--->
 
 
+  <!-- Script -->
 <script>
-        function TDB(button) {
-            let dropdown = button.nextElementSibling;
+  const sidebar = document.getElementById("sidebar");
+  const profileBtn = document.getElementById("profileBtn");
+  const closeBtn = document.getElementById("closeBtn");
+  const dropdown = document.querySelector(".dropdown");
+  const submenu = document.querySelector(".submenu");
+  const arrowIcon = dropdown.querySelector(".fa-angle-right");
 
-            // Sabhi dropdowns ko close karo
-            document.querySelectorAll(".dropdown-content").forEach(d => {
-                if (d !== dropdown) d.style.display = "none";
-            });
+  const editIcon = document.querySelector(".edit-icon");
+  const fileInput = document.getElementById("fileInput");
+  const profilePic = document.querySelector(".profile-pic");
+  const topProfilePic = document.getElementById("topProfilePic");
 
-            // Clicked dropdown ko toggle karo
-            if (dropdown.style.display === "block") {
-                dropdown.style.display = "none";
-            } else {
-                dropdown.style.display = "block";
+  const cropModal = document.getElementById("cropModal");
+  const cropImage = document.getElementById("cropImage");
+  const cropBtn = document.getElementById("cropBtn");
+  let cropper;
 
-                // **Dropdown position adjust karna taaki screen ke bahar na jaye**
-                let rect = dropdown.getBoundingClientRect();
-                let screenWidth = window.innerWidth;
+  // Sidebar open
+  profileBtn.addEventListener("click", () => {
+    sidebar.classList.add("active");
+  });
 
-                if (rect.right > screenWidth) {
-                    dropdown.style.left = `-${rect.width - button.offsetWidth}px`;
-                } else {
-                    dropdown.style.left = "0";
-                }
-            }
-        }
+  // Sidebar close
+  closeBtn.addEventListener("click", () => {
+    sidebar.classList.remove("active");
+  });
 
-        function SOB(selected, optionText) {
-            let dropdown = selected.closest('.dropdown-content');
+  // Dropdown menu toggle
+  dropdown.addEventListener("click", () => {
+    submenu.style.display = submenu.style.display === "block" ? "none" : "block";
+    arrowIcon.classList.toggle("rotate");
+  });
 
-            // Sabhi options se "selected" class hatana
-            dropdown.querySelectorAll('div').forEach(div => div.classList.remove('selected'));
+  // Edit icon opens file picker
+  editIcon.addEventListener("click", () => {
+    fileInput.click();
+  });
 
-            // Click kiya hua option "selected" class me daalna
-            selected.classList.add('selected');
+  // On file select - show cropper modal
+  fileInput.addEventListener("change", (event) => {
+    const file = event.target.files[0];
+    if (file && file.type.startsWith("image/")) {
+      const reader = new FileReader();
+      reader.onload = function (e) {
+        cropImage.src = e.target.result;
+        cropModal.style.display = "flex";
 
-            // 50ms ke baad dropdown hide karna (permanent nahi, dubara open ho sake)
-            setTimeout(() => {
-                dropdown.style.display = 'none';
-            }, 50);
+        setTimeout(() => {
+          if (cropper) cropper.destroy();
+          cropper = new Cropper(cropImage, {
+            aspectRatio: 1,
+            viewMode: 1
+          });
+        }, 100);
+      };
+      reader.readAsDataURL(file);
+    }
+  })
 
-            // Alert ya custom action
-            alert(`You selected: ${optionText}`);
-        }
+  // On crop confirm
+  cropBtn.addEventListener("click", () => {
+    const canvas = cropper.getCroppedCanvas({
+      width: 200,
+      height: 200,
+    });
+    const imageData = canvas.toDataURL("image/png");
 
-        // Dropdown ko close karne ka logic (Jab user kahin aur click kare)
-        document.addEventListener("click", function (event) {
-            let isDropdownButton = event.target.classList.contains("dropbtn");
-            let isDropdownContent = event.target.closest(".dropdown-content");
+    profilePic.src = imageData;
+    topProfilePic.src = imageData;
+    localStorage.setItem("profileImage", imageData);
 
-            // Agar click kisi button ya dropdown-content pe nahi hua to sabko close kar do
-            if (!isDropdownButton && !isDropdownContent) {
-                document.querySelectorAll(".dropdown-content").forEach(dropdown => {
-                    dropdown.style.display = "none";
-                });
-            }
-        });
+    cropper.destroy();
+    cropModal.style.display = "none";
+  });
 
-    </script>
-<script src="js/main.js"></script>
+  // On page load - restore image from localStorage
+  window.addEventListener("DOMContentLoaded", () => {
+    const savedImage = localStorage.getItem("profileImage");
+    if (savedImage) {
+      profilePic.src = savedImage;
+      topProfilePic.src = savedImage;
+    }
+  })
+
+// Sidebar toggle const sidebar document.getElementById("sidebar"); const profileBtn = document.getElementById("profileBtn"); const closeBtn = document.getElementById("closeBtn");
+
+profileBtn.addEventListener("click", () => { sidebar.classList.add("active"); });
+
+closeBtn.addEventListener("click", () => { sidebar.classList.remove("active"); });
+
+// Submenu toggle const dropdown = document.querySelector(".dropdown"); const submenu = document.querySelector(".submenu"); const arrowIcon = dropdown.querySelector(".fa-angle-right");
+
+dropdown.addEventListener("click", () => { submenu.style.display = submenu.style.display === "block" ? "none" : "block"; arrowIcon.classList.toggle("rotate"); });
+</script>
+
+  <!-- External Custom Script -->
+  <script src="js/main.js"></script>
 </body>
 </html>
