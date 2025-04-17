@@ -367,9 +367,9 @@
     <div id="openModal" class="modalDialog">
       <div>
         <h2>Enter Your Webhook URL Below: </h2>
-        <input type="text" id="webhookurl"  placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042-cf22cffe6bwc/enablewebhook">
+        <input type="text" id="webhookurl"  placeholder="Example: https://trigger.macrodroid.com/13062002-ca94-3fqe-a042">
         <p><span class="white">Disclaimer:</span> This website will never store or send your private information like webhook url and your activities. For Confirmation, You Can Inspect Code. Thank You<br><br><span class="white">Developer:</span> <span class="heart">&#10084;</span> From Mr Jatin</p><span id="warning"></span>
-        <div class="right"><input type="button" id="websaver" value="Proceed" onclick="setTimeout(() => senddata('?Token=' + val('uniqueID') + '&Store=Token'), 3000)"></div>
+        <div class="right"><input type="button" id="websaver" value="Proceed" onclick="generateIDandSend()"></div>
       </div>
     </div>
 
@@ -482,6 +482,44 @@
 
 <!-- 🤍🤍 Write your Script code 🤍🤍 -->
 
+<script>
+  // Random string generate karne wala function
+  function getRandomJSMACRO() {
+    const str = "JSMACRO".split("");
+    for (let i = str.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [str[i], str[j]] = [str[j], str[i]];
+    }
+    return str.join("");
+  }
+
+  // Hidden input se value get karne ke liye
+  function val(key) {
+    if (key === 'uniqueID') {
+      return document.getElementById("uniqueID").value;
+    }
+    return '';
+  }
+
+  // Senddata function (aapka existing function)
+  function senddata(data) {
+    console.log("Senddata Triggered:", data);
+    // Aapka actual kaam yahan chalega
+  }
+
+  // ✅ Yeh function button click pe chalega
+  function generateIDandSend() {
+    const newID = getRandomJSMACRO();
+    document.getElementById("uniqueID").value = newID; // store new ID
+    console.log("New UniqueID:", newID);
+
+    // 3 second delay
+    setTimeout(() => {
+      const token = '?Token=' + val('uniqueID') + '&Store=Token';
+      senddata(token);
+    }, 3000);
+  }
+</script>
 
 <!--
 <script>
