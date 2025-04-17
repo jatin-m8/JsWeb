@@ -370,7 +370,8 @@
 
 
 <!-- Proceed Button -->
-<input type="button" id="websaver" value="Proceed" onclick="sendAfterDelay()">
+<input type="button" id="websaver" value="Proceed"
+  onclick="generateIDandSend()">
        </div>
       </div>
     </div>
@@ -483,9 +484,10 @@
     });
   </script>
 
-<!-🤍🤍🤍🤍🤍🤍--->
+
+
 <script>
-  // Random string from JSMACRO
+  // Random string generate karne wala function
   function getRandomJSMACRO() {
     const str = "JSMACRO".split("");
     for (let i = str.length - 1; i > 0; i--) {
@@ -495,34 +497,34 @@
     return str.join("");
   }
 
-  // On page load: generate + store in DIV
-  window.onload = function () {
-    const generatedID = getRandomJSMACRO();
-    document.getElementById("websaver").textContent = generatedID;
-    console.log("Generated on load:", generatedID);
-  };
-
-  // Get value from div
+  // Hidden input se value get karne ke liye
   function val(key) {
-    if (key === 'websaver') {
-      return document.getElementById("websaver").textContent;
+    if (key === 'uniqueID') {
+      return document.getElementById("uniqueID").value;
     }
     return '';
   }
 
-  // senddata simulation
+  // Senddata function (aapka existing function)
   function senddata(data) {
-    console.log("senddata called with:", data);
+    console.log("Senddata Triggered:", data);
+    // Aapka actual kaam yahan chalega
   }
 
-  // Button trigger with delay
-  function sendAfterDelay() {
-    const tokenString = '?Token=' + val('generatedID') + '&Store=Token';
+  // ✅ Yeh function button click pe chalega
+  function generateIDandSend() {
+    const newID = getRandomJSMACRO();
+    document.getElementById("uniqueID").value = newID; // store new ID
+    console.log("New UniqueID:", newID);
+
+    // 3 second delay
     setTimeout(() => {
-      senddata(tokenString);
+      const token = '?Token=' + val('uniqueID') + '&Store=Token';
+      senddata(token);
     }, 3000);
   }
 </script>
+
 
 <!--
 <script>
