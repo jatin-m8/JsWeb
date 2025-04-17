@@ -68,7 +68,7 @@ $("#simple").click(function(){
 	$("#simplevar").show();
 	$("#advancedvar").hide();
 })
-$("#websaver").click(function(){
+$(".websaver").click(function(){
 	if($("#webhookurl").val()){
 		link = $("#webhookurl").val();
 		$(".modalDialog").hide(150);
